@@ -37,7 +37,6 @@ export default function Register(props) {
     const { register, errors, handleSubmit } = useForm()
 
     const onSubmit = (data) => {
-        console.log(data)
         dispatch(registerRequest(data))
     }
 

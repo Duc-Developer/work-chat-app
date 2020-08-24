@@ -11,10 +11,12 @@ export function authReducer(state = initialState, action) {
     switch(type) {
         case REGISTER_SUCCESS:
             console.log("register success!")
-            return payload
+            alert(`${payload.email} được đăng ký thành công`)
+            localStorage.setItem("userMail", payload.email)
+            return payload // {Fname, Lname, email, password}
         case REGISTER_FAIL:
-            console.log("register fail!")
-            return state
+            alert(payload.error)
+            return payload // {error: ....}
         default:
             return state
     }
