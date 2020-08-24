@@ -1,10 +1,12 @@
 import { put, takeEvery } from 'redux-saga/effects'
-import { registerSuccess, registerFail } from '../actions/auth.action'
+import { registerSuccess, registerFail, loginFail, loginSuccess } from '../actions/auth.action'
 import { authConstants } from '../constants'
 import { createUserApi, getAllUserPromiseApi } from '../api'
+import md5 from 'md5'
 
 const {
-    REGISTER_REQUEST
+    REGISTER_REQUEST,
+    LOGIN_REQUEST
 } = authConstants
 
 function* register(action) {
@@ -31,6 +33,34 @@ function* register(action) {
     yield put(registerSuccess(payload))
 }
 
+function* login(action) {
+    const { payload } = action
+    const { email, password } = payload
+
+    let listUsers = yield getAllUserPromiseApi().then(snap => snap.val())
+    for (var key in listUsers) {
+        if(listUsers[key].email !== email) {
+            yield put(loginFail({
+                error: "Không tồn tại người dùng, vui lòng thử lại!"
+            }))
+            return
+        }
+        if(listUsers[key].password !== md5(password)) {
+            yield put(loginFail({
+                error: "Mật khẩu nhập không đúng rồi!"
+            }))
+            return
+        }
+        yield put(loginSuccess(listUsers[key]))
+        return
+    }
+
+}
+
 export function* registerAction() {
     yield takeEvery(REGISTER_REQUEST, register)
+}
+
+export function* loginAction() {
+    yield takeEvery(LOGIN_REQUEST, login)
 }
