@@ -1,11 +1,18 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import Auth from './auth';
 
 function App() {
   return (
     <div className="App">
-      <h1>WE BUILD WORK CHAT FOR TEAM WORK</h1>
+      <BrowserRouter>
+      <Switch>
+        <Route path="/auth">
+          <Auth />
+        </Route>
+      </Switch>
+      </BrowserRouter>
     </div>
   );
 }
