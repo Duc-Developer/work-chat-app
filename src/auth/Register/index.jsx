@@ -4,6 +4,8 @@ import { Grid, TextField, Button } from '@material-ui/core'
 import logoApp from '../../images/work-chat-logo.png'
 import { useForm } from 'react-hook-form'
 import Alert from '@material-ui/lab/Alert';
+import { useDispatch } from 'react-redux'
+import { registerRequest } from '../../actions/auth.action'
 
 const useStyles = makeStyles({
     root: {
@@ -31,10 +33,12 @@ const useStyles = makeStyles({
 export default function Register(props) {
 
     const classes = useStyles(props)
+    const dispatch = useDispatch()
     const { register, errors, handleSubmit } = useForm()
 
     const onSubmit = (data) => {
         console.log(data)
+        dispatch(registerRequest(data))
     }
 
     return <div className={classes.root}>
