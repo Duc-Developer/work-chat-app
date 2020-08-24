@@ -20,8 +20,9 @@ export function registerSuccess(data) {
     }
 }
 
-export function registerFail() {
+export function registerFail(data) {
     return {
-        type: REGISTER_FAIL
+        type: REGISTER_FAIL,
+        payload: data
     }
 }
