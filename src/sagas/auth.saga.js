@@ -1,13 +1,8 @@
 import { put, takeEvery } from 'redux-saga/effects'
 import { registerSuccess, registerFail, loginFail, loginSuccess } from '../actions/auth.action'
-import { authConstants } from '../constants'
+import { authConstants as authType } from '../constants'
 import { createUserApi, getAllUserPromiseApi } from '../api'
 import md5 from 'md5'
-
-const {
-    REGISTER_REQUEST,
-    LOGIN_REQUEST
-} = authConstants
 
 function* register(action) {
     const { payload } = action
@@ -58,9 +53,9 @@ function* login(action) {
 }
 
 export function* registerAction() {
-    yield takeEvery(REGISTER_REQUEST, register)
+    yield takeEvery(authType.REGISTER_REQUEST, register)
 }
 
 export function* loginAction() {
-    yield takeEvery(LOGIN_REQUEST, login)
+    yield takeEvery(authType.LOGIN_REQUEST, login)
 }

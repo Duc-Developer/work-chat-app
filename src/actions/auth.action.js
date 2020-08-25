@@ -1,53 +1,43 @@
-import { authConstants } from '../constants'
-
-const {
-    REGISTER_REQUEST,
-    REGISTER_SUCCESS,
-    REGISTER_FAIL,
-
-    LOGIN_REQUEST,
-    LOGIN_SUCCESS,
-    LOGIN_FAIL
-} = authConstants
+import { authConstants as type } from '../constants'
 
 export function registerRequest(data) {
     return {
-        type: REGISTER_REQUEST,
+        type: type.REGISTER_REQUEST,
         payload: data
     }
 }
 
 export function registerSuccess(data) {
     return {
-        type: REGISTER_SUCCESS,
+        type: type.REGISTER_SUCCESS,
         payload: data
     }
 }
 
 export function registerFail(data) {
     return {
-        type: REGISTER_FAIL,
+        type: type.REGISTER_FAIL,
         payload: data
     }
 }
 
 export function loginRequest(data) {
     return {
-        type: LOGIN_REQUEST,
+        type: type.LOGIN_REQUEST,
         payload: data
     }
 }
 
 export function loginSuccess(data) {
     return {
-        type: LOGIN_SUCCESS,
+        type: type.LOGIN_SUCCESS,
         payload: data
     }
 }
 
 export function loginFail(data) {
     return {
-        type: LOGIN_FAIL,
+        type: type.LOGIN_FAIL,
         payload: data
     }
 }
