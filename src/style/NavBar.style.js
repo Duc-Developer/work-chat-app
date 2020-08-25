@@ -9,6 +9,7 @@ export const NavBarUseStyles = makeStyles((theme) => ({
     },
     formInput: {
         flexGrow: 1,
+        position: 'relative',
     },
     inputRoot: {
         color: "inherit",
