@@ -1,9 +1,9 @@
-import React from 'react'
+import React from 'react';
 import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar';
-import logoApp from '../images/work-chat-logo.png'
-import Register from './Register'
-import Login from './Login'
+import logoApp from '../images/work-chat-logo.png';
+import Register from './Register';
+import Login from './Login';
 import { Toolbar, Button, makeStyles, ButtonBase } from '@material-ui/core';
 
 const useStyles = makeStyles({
@@ -20,9 +20,10 @@ const useStyles = makeStyles({
 
 export default function Auth() {
 
-    const match = useRouteMatch()
-    const history = useHistory()
-    const classes = useStyles()
+    const match = useRouteMatch();
+    const history = useHistory();
+    const classes = useStyles();
+    
     return <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>

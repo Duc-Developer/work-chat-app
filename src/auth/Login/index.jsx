@@ -1,20 +1,21 @@
-import React from 'react'
-import { Grid, Button, TextField } from '@material-ui/core'
-import logoApp from '../../images/work-chat-logo.png'
-import { useForm } from 'react-hook-form'
-import Alert from '@material-ui/lab/Alert'
-import { useDispatch } from 'react-redux'
-import { loginRequest } from '../../actions/auth.action'
-import { loginUseStyles as useStyles} from '../../style'
+import React from 'react';
+import { Grid, Button, TextField } from '@material-ui/core';
+import logoApp from '../../images/work-chat-logo.png';
+import { useForm } from 'react-hook-form';
+import Alert from '@material-ui/lab/Alert';
+import { useDispatch } from 'react-redux';
+import { loginRequest } from '../../actions/auth.action';
+import { loginUseStyles as useStyles} from '../../style';
 
 export default function Login() {
 
-    const classes = useStyles()
-    const dispatch = useDispatch()
-    const { handleSubmit, register, errors } = useForm()
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const { handleSubmit, register, errors } = useForm();
     const onSubmit = (data) => {
         dispatch(loginRequest(data))
-    }
+    };
+    
     return <div className={classes.root}>
         <div className={classes.logo}>
             <img src={logoApp} alt="logo-app" width="96px" />

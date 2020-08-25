@@ -1,15 +1,17 @@
-import React from 'react'
+import React from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
-import { InputBase, IconButton, Typography, FormControl } from '@material-ui/core';
+import { ButtonBase, InputBase, IconButton, Typography, FormControl } from '@material-ui/core';
 
 import { SideBarLeftUseStyles as useStyles } from '../../../style'
 import RoomCard from '../../RoomCard';
 
 export default function SideBarLeft() {
 
-    const classes = useStyles()
+    const classes = useStyles();
+    const listUsers = [1,2,3,4,5,5,6,6,7,7,8];
+
     return <div className={classes.root}>
         <div className={classes.header}>
             <IconButton>
@@ -36,7 +38,13 @@ export default function SideBarLeft() {
         </FormControl>
         <div className={classes.rooms}>
             <div className={classes.wrapRooms}>
-                <RoomCard />
+                {
+                    listUsers && listUsers.map((item, index) => {
+                        return <ButtonBase  key={index}>
+                            <RoomCard />
+                        </ButtonBase>
+                    })
+                }
             </div>
         </div>
     </div>

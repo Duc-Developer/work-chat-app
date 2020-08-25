@@ -1,7 +1,7 @@
-import React from 'react'
-import PropTypes from 'prop-types'
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Typography } from '@material-ui/core';
-import { RoomCardUseStyles as useStyles } from '../../style'
+import { RoomCardUseStyles as useStyles } from '../../style';
 
 RoomCard.propTypes = {
     data: PropTypes.object
@@ -18,7 +18,7 @@ RoomCard.defaultProps = {
 
 export default function RoomCard(props) {
 
-    const classes = useStyles()
+    const classes = useStyles();
     const { image, Fname, message, time } = props.data
     return <div className={classes.root}>
         <div className={classes.avatar}>

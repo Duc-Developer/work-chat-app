@@ -1,15 +1,15 @@
-import React from 'react'
+import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import logoApp from '../../images/work-chat-logo.png'
+import logoApp from '../../images/work-chat-logo.png';
 import FormControl from '@material-ui/core/FormControl';
 import InputBase from '@material-ui/core/InputBase';
 import SearchIcon from '@material-ui/icons/Search';
-import PropTypes from 'prop-types'
-import { useHistory } from 'react-router'
-import { NavBarUseStyles as useStyles } from '../../style'
+import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
+import { NavBarUseStyles as useStyles } from '../../style';
 
 NavBar.propTypes = {
     profile: PropTypes.object
@@ -25,8 +25,8 @@ NavBar.defaultProps = {
 export default function NavBar(props) {
 
     const classes = useStyles();
-    const history = useHistory()
-    const { image, Fname } = props.profile
+    const history = useHistory();
+    const { image, Fname } = props.profile;
 
     return <div className={classes.root}>
         <AppBar position="static">

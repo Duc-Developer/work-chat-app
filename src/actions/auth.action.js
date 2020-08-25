@@ -1,4 +1,4 @@
-import { authConstants as type } from '../constants'
+import { authConstants as type } from '../constants';
 
 export function registerRequest(data) {
     return {

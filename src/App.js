@@ -5,11 +5,11 @@ import DashBoard from './components/DashBoard';
 
 function App() {
 
-  const [isRedirect, setRedirect] = useState(true)
+  const [isRedirect, setRedirect] = useState(true);
 
   useEffect(() => {
-    let user = localStorage.getItem("userMail")
-    !user ? setRedirect(true) : setRedirect(false)
+    let user = localStorage.getItem("userMail");
+    !user ? setRedirect(true) : setRedirect(false);
   })
   return (
     <div className="App">
