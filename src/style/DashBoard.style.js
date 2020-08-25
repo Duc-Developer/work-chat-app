@@ -4,5 +4,7 @@ export const DashBoardUseStyles = makeStyles({
     root: {
         width: "calc(100vw)",
         height: "calc(100vh)",
-    }
+        display: "flex",
+        flexDirection: "column"
+    },
 })
