@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Auth from './auth';
+import DashBoard from './components/DashBoard';
 
 function App() {
 
@@ -15,9 +16,11 @@ function App() {
       <BrowserRouter>
         {isRedirect && <Redirect exact to="/auth" />}
         <Switch>
-
           <Route path="/auth">
             <Auth />
+          </Route>
+          <Route path="/">
+            <DashBoard />
           </Route>
         </Switch>
 
