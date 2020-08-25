@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route, useRouteMatch, Link, Redirect, useHistory } from 'react-router-dom'
+import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar';
 import logoApp from '../images/work-chat-logo.png'
 import Register from './Register'
