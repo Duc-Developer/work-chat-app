@@ -5,6 +5,7 @@ import AddBoxIcon from '@material-ui/icons/AddBox';
 import { InputBase, IconButton, Typography, FormControl } from '@material-ui/core';
 
 import { SideBarLeftUseStyles as useStyles } from '../../../style'
+import RoomCard from '../../RoomCard';
 
 export default function SideBarLeft() {
 
@@ -35,7 +36,7 @@ export default function SideBarLeft() {
         </FormControl>
         <div className={classes.rooms}>
             <div className={classes.wrapRooms}>
-                list rooms here
+                <RoomCard />
             </div>
         </div>
     </div>
