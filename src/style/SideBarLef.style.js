@@ -4,10 +4,10 @@ export const SideBarLeftUseStyles = makeStyles({
     root: {
         width: "calc(25vw)",
         height: "calc(100vh - 70px)",
-        border: "1px solid #dddddd",
+        border: "1px 0 1px 1px solid #dddddd",
         display: "flex",
         flexDirection: "column",
-        flexGrow: 1
+        // flexGrow: 1
     },
     header: {
         display: "flex",
