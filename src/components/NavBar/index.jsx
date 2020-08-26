@@ -28,6 +28,11 @@ export default function NavBar(props) {
     const history = useHistory();
     const { image, Fname } = props.profile;
 
+    const handleLogOut = () => {
+        localStorage.removeItem("userMail");
+        history.push("/auth")
+    };
+
     return <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
@@ -53,7 +58,9 @@ export default function NavBar(props) {
                 <Typography variant="h6">
                     {Fname}
                 </Typography>
-                <Button color="inherit">Đăng xuất</Button>
+                <Button 
+                onClick={handleLogOut}
+                color="inherit">Đăng xuất</Button>
             </Toolbar>
         </AppBar>
     </div>
