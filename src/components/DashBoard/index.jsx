@@ -7,9 +7,9 @@ import MainBoardController from '../MainBoardController';
 export default function DashBoard() {
 
     const classes = useStyles()
-    return <div className={classes.root}>
+    return <div >
         <NavBar />
-        <div className={classes.body}>
+        <div className={classes.root}>
         <SideBarLeft />
         <MainBoardController />
         </div>

@@ -31,7 +31,6 @@ export default function SideBarLeft() {
             <div className={classes.search}>
                 <SearchIcon />
                 <InputBase
-                autoFocus
                 margin="dense"
                 placeholder="Search…" />
             </div>
