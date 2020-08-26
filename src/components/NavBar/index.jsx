@@ -10,6 +10,8 @@ import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { NavBarUseStyles as useStyles } from '../../style';
+import { useDispatch } from 'react-redux';
+import { controlMainBoard } from '../../actions/mainBoardControl.action';
 
 NavBar.propTypes = {
     profile: PropTypes.object
@@ -26,12 +28,17 @@ export default function NavBar(props) {
 
     const classes = useStyles();
     const history = useHistory();
+    const dispatch = useDispatch()
     const { image, Fname } = props.profile;
 
     const handleLogOut = () => {
         localStorage.removeItem("userMail");
         history.push("/auth")
     };
+
+    const handleClickAvatar = () => {
+        dispatch(controlMainBoard("profile"))
+    }
 
     return <div className={classes.root}>
         <AppBar position="static">
@@ -49,7 +56,9 @@ export default function NavBar(props) {
                         className={classes.inputRoot}
                         placeholder="Search…" />
                 </FormControl>
-                <Button className={classes.avatar}>
+                <Button 
+                onClick={handleClickAvatar}
+                className={classes.avatar}>
                     <img
                         src={image}
                         alt="user-avatar"
