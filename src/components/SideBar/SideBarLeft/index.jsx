@@ -6,11 +6,17 @@ import { ButtonBase, InputBase, IconButton, Typography, FormControl } from '@mat
 
 import { SideBarLeftUseStyles as useStyles } from '../../../style'
 import RoomCard from '../../RoomCard';
+import { useDispatch } from 'react-redux';
+import { controlMainBoard } from '../../../actions/mainBoardControl.action';
 
 export default function SideBarLeft() {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
     const listUsers = [1,2,3,4,5,5,6,6,7,7,8];
+    const handleOnClick = (e) => {
+        dispatch(controlMainBoard("chatOnBoard"))
+    };
 
     return <div className={classes.root}>
         <div className={classes.header}>
@@ -39,7 +45,7 @@ export default function SideBarLeft() {
             <div className={classes.wrapRooms}>
                 {
                     listUsers && listUsers.map((item, index) => {
-                        return <ButtonBase  key={index}>
+                        return <ButtonBase onClick={handleOnClick} key={index}>
                             <RoomCard />
                         </ButtonBase>
                     })
