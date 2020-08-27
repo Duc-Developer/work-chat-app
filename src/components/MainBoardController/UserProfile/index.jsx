@@ -10,12 +10,13 @@ import GenderCheckBox from '../../Fields/GenderCheckBox';
 const defaultValues = {
     Fname: "",
     Lname: "",
-    TownShip: "",
+    townShip: "",
     address: "",
     city: "",
     country: { code: "VN", label: "Vietnam", phone: "84" },
     gender: "",
     company: "",
+    phone: "",
 }
 
 export default function UserProfile() {
@@ -58,7 +59,7 @@ export default function UserProfile() {
                     <Grid item xs={4}>
                         <TextFieldController
                             inputRef={register}
-                            name="TownShip"
+                            name="townShip"
                             label="Quận/Huyện" />
                     </Grid>
                     <Grid item xs={4}>
@@ -81,7 +82,7 @@ export default function UserProfile() {
                     </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                    <ImgMediaCard onChange={e=>e.target.value} />
+                    <ImgMediaCard control={control} />
                 </Grid>
                 <Grid item xs={12}>
                     Danh Sách kết bạn và chờ kết bạn hiển thị ở đây
