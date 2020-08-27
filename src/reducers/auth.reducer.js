@@ -18,7 +18,6 @@ export function authReducer(state = initialState, action) {
             console.log("Login success!");
             alert("Đăng nhập thành công!");
             localStorage.setItem("userMail", payload.email);
-            console.log(payload);
             return payload
         case authType.LOGIN_FAIL:
             alert(payload.error)
