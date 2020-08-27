@@ -1,6 +1,6 @@
 import { mainBoardControlConstants as typeControl } from '../constants'
 
-const initialState = "";
+const initialState = "userProfile";
 // action.payload can be 'userProfile' 'ChatOnBoard' 'SettingBoard'
 export function controlReducer(state = initialState, action) {
     const { type, payload } = action;

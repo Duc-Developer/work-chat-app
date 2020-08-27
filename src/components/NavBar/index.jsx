@@ -37,7 +37,7 @@ export default function NavBar(props) {
     };
 
     const handleClickAvatar = () => {
-        dispatch(controlMainBoard("profile"))
+        dispatch(controlMainBoard("userProfile"))
     }
 
     return <div className={classes.root}>
