@@ -15,6 +15,8 @@ ImgMediaCard.propTypes = {
     Fname: PropTypes.string,
     Lname: PropTypes.string,
     phone: PropTypes.string,
+    email: PropTypes.string,
+    password: PropTypes.string,
     onChange: PropTypes.func,
 }
 
@@ -23,6 +25,8 @@ ImgMediaCard.defaultProps = {
     Fname: "Fname",
     Lname: "Lname",
     phone: "0911662463",
+    email: "example@email.com",
+    password: "########",
     onChange: () => { }
 }
 
@@ -31,7 +35,14 @@ export default function ImgMediaCard(props) {
     const inputImg = useRef(null);
     const [edit, setEdit] = useState(true);
     const [src, setSrc] = useState(null);
-    const { image, Fname, Lname, phone, control } = props;
+    const {
+        image,
+        Fname,
+        Lname,
+        phone,
+        control,
+        email,
+        password, } = props;
 
     const handleEdit = () => {
         setEdit(!edit)
@@ -99,6 +110,36 @@ export default function ImgMediaCard(props) {
                                     name="phone"
                                     disableUnderline={edit}
                                     defaultValue={phone}
+                                    onChange={e => onChange(e.target.value)}
+                                    readOnly={edit} />
+                            </div>)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Controller
+                            control={control}
+                            name="email"
+                            render={({ onChange }) => (<div>
+                                <label><b>Email: </b></label>
+                                <Input
+                                    name="email"
+                                    disableUnderline={edit}
+                                    defaultValue={email}
+                                    onChange={e => onChange(e.target.value)}
+                                    readOnly={edit} />
+                            </div>)}
+                        />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Controller
+                            control={control}
+                            name="password"
+                            render={({ onChange }) => (<div>
+                                <label><b>Password: </b></label>
+                                <Input
+                                    name="password"
+                                    disableUnderline={edit}
+                                    defaultValue={password}
                                     onChange={e => onChange(e.target.value)}
                                     readOnly={edit} />
                             </div>)}

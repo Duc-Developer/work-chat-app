@@ -17,6 +17,9 @@ const defaultValues = {
     gender: "",
     company: "",
     phone: "",
+    image: "https://picsum.photos/200",
+    email: "",
+    password: ""
 }
 
 export default function UserProfile() {
