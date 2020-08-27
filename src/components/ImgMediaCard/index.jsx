@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { ImgMediaCardUseStyles as useStyles } from '../../style'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -28,7 +28,9 @@ ImgMediaCard.defaultProps = {
 
 export default function ImgMediaCard(props) {
     const classes = useStyles();
+    const inputImg = useRef(null);
     const [edit, setEdit] = useState(true);
+    const [src, setSrc] = useState(null);
     const { image, Fname, Lname, phone, control } = props;
 
     const handleEdit = () => {
@@ -37,12 +39,26 @@ export default function ImgMediaCard(props) {
 
     return (
         <Card className={classes.root}>
-            <CardActionArea>
+            <CardActionArea onClick={() => inputImg.current.click()} >
+                <Controller
+                    render={({ onChange }) => (<Input
+                        type="file"
+                        onChange={(e) => {
+                            let url = URL.createObjectURL(e.target.files[0]);
+                            setSrc(url);
+                            onChange(e.target.files[0]);
+                        }}
+                        inputRef={inputImg}
+                        id="file"
+                        style={{ display: "none" }} />)}
+                    control={control}
+                    name="image"
+                />
                 <CardMedia
                     component="img"
                     alt="user-profile-avatar"
                     height="200"
-                    image={image}
+                    image={!src ? image : src}
                     title="user-profile-avatar"
                 />
             </CardActionArea>
@@ -77,13 +93,15 @@ export default function ImgMediaCard(props) {
                         <Controller
                             control={control}
                             name="phone"
-                            render={({ onChange }) => (<Input
-                                label="phone"
-                                name="phone"
-                                disableUnderline={edit}
-                                defaultValue={phone}
-                                onChange={e => onChange(e.target.value)}
-                                readOnly={edit} />)}
+                            render={({ onChange }) => (<div>
+                                <label><b>Phone: </b></label>
+                                <Input
+                                    name="phone"
+                                    disableUnderline={edit}
+                                    defaultValue={phone}
+                                    onChange={e => onChange(e.target.value)}
+                                    readOnly={edit} />
+                            </div>)}
                         />
                     </Grid>
                 </Grid>
