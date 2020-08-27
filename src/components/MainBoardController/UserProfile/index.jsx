@@ -1,11 +1,98 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
 import { UserProfileUseStyles as useStyles } from '../../../style';
+import TextFieldController from '../../Fields/TextFieldController';
+import { Grid, FormControl, Typography, Button } from '@material-ui/core';
+import ImgMediaCard from '../../ImgMediaCard';
+import CountrySelect from '../../Fields/CountrySelect';
+import GenderCheckBox from '../../Fields/GenderCheckBox';
+
+const defaultValues = {
+    Fname: "",
+    Lname: "",
+    TownShip: "",
+    address: "",
+    city: "",
+    country: { code: "VN", label: "Vietnam", phone: "84" },
+    gender: ""
+}
 
 export default function UserProfile() {
 
     const classes = useStyles();
-    return <div 
-    className={classes.root}>
-        This is userProfile
+    const { control, handleSubmit, register } = useForm({ defaultValues });
+    const onSubmit = data => console.log(data);
+
+    return <div className={classes.root}>
+        <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container spacing={2}>
+                <Grid item xs={8}>
+                    <Typography align="center" variant="h3" color="primary">
+                        Your Profile
+                    </Typography>
+                </Grid>
+                <Grid item container alignItems="center" xs={4}>
+                    <Button type="submit" variant="contained" color="primary">
+                        Create and Submit
+                    </Button>
+                </Grid>
+            </Grid>
+            <Grid container spacing={2}>
+                <Grid item xs={8} container spacing={2} >
+                    <Grid item xs={4}>
+                        <TextFieldController
+                            inputRef={register}
+                            name="Fname"
+                            label="Tên" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldController
+                            inputRef={register}
+                            name="Lname"
+                            label="Họ" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <GenderCheckBox control={control} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextFieldController
+                            inputRef={register}
+                            name="address"
+                            label="Địa chỉ" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldController
+                            inputRef={register}
+                            name="TownShip"
+                            label="Quận/Huyện" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <TextFieldController
+                            inputRef={register}
+                            name="city"
+                            label="Thành phố" />
+                    </Grid>
+                    <Grid item xs={4}>
+                        <CountrySelect control={control} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextFieldController
+                            inputRef={register}
+                            multiline={true}
+                            name="introduce"
+                            rows={3}
+                            variant="outlined"
+                            label="Giới thiệu về bản thân" />
+                    </Grid>
+                </Grid>
+                <Grid item xs={4}>
+                    <ImgMediaCard />
+                </Grid>
+                <Grid item xs={12}>
+                    Danh Sách kết bạn và chờ kết bạn hiển thị ở đây
+                </Grid>
+            </Grid>
+        </form>
+
     </div>
 }
