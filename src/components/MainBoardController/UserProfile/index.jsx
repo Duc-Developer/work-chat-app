@@ -2,7 +2,7 @@ import React from 'react';
 import { useForm } from "react-hook-form";
 import { UserProfileUseStyles as useStyles } from '../../../style';
 import TextFieldController from '../../Fields/TextFieldController';
-import { Grid, FormControl, Typography, Button } from '@material-ui/core';
+import { Grid, Typography, Button } from '@material-ui/core';
 import ImgMediaCard from '../../ImgMediaCard';
 import CountrySelect from '../../Fields/CountrySelect';
 import GenderCheckBox from '../../Fields/GenderCheckBox';
@@ -14,7 +14,8 @@ const defaultValues = {
     address: "",
     city: "",
     country: { code: "VN", label: "Vietnam", phone: "84" },
-    gender: ""
+    gender: "",
+    company: "",
 }
 
 export default function UserProfile() {
@@ -39,17 +40,11 @@ export default function UserProfile() {
             </Grid>
             <Grid container spacing={2}>
                 <Grid item xs={8} container spacing={2} >
-                    <Grid item xs={4}>
+                    <Grid item xs={8}>
                         <TextFieldController
                             inputRef={register}
-                            name="Fname"
-                            label="Tên" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextFieldController
-                            inputRef={register}
-                            name="Lname"
-                            label="Họ" />
+                            name="company"
+                            label="Công ty" />
                     </Grid>
                     <Grid item xs={4}>
                         <GenderCheckBox control={control} />
@@ -86,7 +81,7 @@ export default function UserProfile() {
                     </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                    <ImgMediaCard />
+                    <ImgMediaCard onChange={e=>e.target.value} />
                 </Grid>
                 <Grid item xs={12}>
                     Danh Sách kết bạn và chờ kết bạn hiển thị ở đây
