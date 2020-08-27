@@ -13,12 +13,19 @@ ImgMediaCard.propTypes = {
     image: PropTypes.string,
     Fname: PropTypes.string,
     Lname: PropTypes.string,
-    content: PropTypes.string
+    phone: PropTypes.string
+}
+
+ImgMediaCard.defaultProps = {
+    image: "https://picsum.photos/200",
+    Fname: "Fname",
+    Lname: "Lname",
+    phone: "0911662463"
 }
 
 export default function ImgMediaCard(props) {
     const classes = useStyles();
-    const { image, Fname, Lname, content } = props;
+    const { image, Fname, Lname, phone } = props;
 
     return (
         <Card className={classes.root}>
@@ -35,7 +42,7 @@ export default function ImgMediaCard(props) {
                         {Fname + Lname}
                     </Typography>
                     <Typography variant="body2" color="textSecondary" component="p">
-                        {content}
+                        {phone}
                     </Typography>
                 </CardContent>
             </CardActionArea>
