@@ -11,7 +11,7 @@ export default function DashBoard() {
     const history = useHistory();
 
     useEffect(() => {
-        let user = localStorage.getItem("userMail");
+        let user = sessionStorage.getItem("userId");
         if(!user) {
             history.push("/auth")
         }

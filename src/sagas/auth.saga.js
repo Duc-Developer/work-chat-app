@@ -10,22 +10,27 @@ function* register(action) {
 
     let listUsers = yield getAllUserPromiseApi().then(snap => snap.val())
     for (var key in listUsers) {
-        if(listUsers[key].email === email){
-        yield put(registerFail({
-                    error: "Email này đã được đăng ký, hãy thử lại với email khác"
-                }))
-                return
+        if (listUsers[key].email === email) {
+            yield put(registerFail({
+                error: "Email này đã được đăng ký, hãy thử lại với email khác"
+            }))
+            return
         };
     };
 
-    let errorRes = yield createUserApi(payload);
-    if(errorRes) {
+    let userId = yield createUserApi(payload)
+        .then(snap => snap.key)
+
+    if (!userId) {
         yield put(registerFail({
             error: "Gửi thông tin đến sever bị lỗi, vui lòng kiểm tra lại mạng!"
         }));
         return;
     }
-    yield put(registerSuccess(payload));
+    yield put(registerSuccess({
+        ...payload,
+        userId: userId
+    }));
 }
 
 function* login(action) {
@@ -34,19 +39,22 @@ function* login(action) {
 
     let listUsers = yield getAllUserPromiseApi().then(snap => snap.val());
     for (var key in listUsers) {
-        if(listUsers[key].email !== email) {
+        if (listUsers[key].email !== email) {
             yield put(loginFail({
                 error: "Không tồn tại người dùng, vui lòng thử lại!"
             }));
             return;
         };
-        if(listUsers[key].password !== md5(password)) {
+        if (listUsers[key].password !== md5(password)) {
             yield put(loginFail({
                 error: "Mật khẩu nhập không đúng rồi!"
             }));
             return;
         }
-        yield put(loginSuccess(listUsers[key]));
+        yield put(loginSuccess({
+            ...listUsers[key],
+            userId: key
+        }));
         return;
     }
 
