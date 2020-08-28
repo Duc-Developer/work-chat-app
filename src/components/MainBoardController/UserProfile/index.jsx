@@ -91,7 +91,9 @@ export default function UserProfile() {
                     </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                    <ImgMediaCard control={control} />
+                    <ImgMediaCard 
+                    control={control} 
+                    errors={errors} />
                 </Grid>
                 <Grid item xs={12}>
                     Danh Sách kết bạn và chờ kết bạn hiển thị ở đây

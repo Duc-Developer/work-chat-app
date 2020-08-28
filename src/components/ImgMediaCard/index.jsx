@@ -36,11 +36,12 @@ export default function ImgMediaCard(props) {
     const [edit, setEdit] = useState(true);
     const [src, setSrc] = useState(null);
     const {
+        control,
+        errors,
         image,
         Fname,
         Lname,
         phone,
-        control,
         email,
         password, } = props;
 
@@ -75,10 +76,20 @@ export default function ImgMediaCard(props) {
             </CardActionArea>
             <CardContent>
                 <Grid container spacing={1}>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <Controller
                             control={control}
                             name="Fname"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Tên của bạn là cần thiết!"
+                                },
+                                maxLength: {
+                                    value: 10,
+                                    message: "Tên phải nhỏ hớn 10 ký tự!"
+                                }
+                            }}
                             render={({ onChange }) => (<Input
                                 label="Fname"
                                 disableUnderline={edit}
@@ -86,11 +97,22 @@ export default function ImgMediaCard(props) {
                                 onChange={e => onChange(e.target.value)}
                                 readOnly={edit} />)}
                         />
+                        {errors.Fname && <i>{errors.Fname.message}</i>}
                     </Grid>
-                    <Grid item xs={4}>
+                    <Grid item xs={6}>
                         <Controller
                             control={control}
                             name="Lname"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Họ của bạn là cần thiết!"
+                                },
+                                maxLength: {
+                                    value: 10,
+                                    message: "Họ phải nhỏ hớn 10 ký tự!"
+                                }
+                            }}
                             render={({ onChange }) => (<Input
                                 label="Lname"
                                 name="Lname"
@@ -99,6 +121,7 @@ export default function ImgMediaCard(props) {
                                 onChange={e => onChange(e.target.value)}
                                 readOnly={edit} />)}
                         />
+                        {errors.Lname && <i>{errors.Lname.message}</i>}
                     </Grid>
                     <Grid item xs={12}>
                         <Controller
@@ -120,6 +143,16 @@ export default function ImgMediaCard(props) {
                         <Controller
                             control={control}
                             name="email"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Email là bắt buộc!"
+                                },
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
+                                    message: "Email định dạng kiểu '@example.com' là bắt buộc!"
+                                }
+                            }}
                             render={({ onChange }) => (<div>
                                 <label><b>Email: </b></label>
                                 <Input
@@ -131,11 +164,22 @@ export default function ImgMediaCard(props) {
                                     readOnly={edit} />
                             </div>)}
                         />
+                        {errors.email && <i>{errors.email.message}</i>}
                     </Grid>
                     <Grid item xs={12}>
                         <Controller
                             control={control}
                             name="password"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Password là bắt buộc! "
+                                },
+                                minLength: {
+                                    value: 6,
+                                    message: "Password phải trên 6 ký tự!"
+                                }
+                            }}
                             render={({ onChange }) => (<div>
                                 <label><b>Password: </b></label>
                                 <Input
@@ -147,6 +191,7 @@ export default function ImgMediaCard(props) {
                                 />
                             </div>)}
                         />
+                        {errors.password && <i>{errors.password.message}</i>}
                     </Grid>
                 </Grid>
             </CardContent>
