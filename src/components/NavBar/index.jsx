@@ -32,7 +32,7 @@ export default function NavBar(props) {
     const { image, Fname } = props.profile;
 
     const handleLogOut = () => {
-        localStorage.removeItem("userMail");
+        sessionStorage.removeItem("userId");
         history.push("/auth")
     };
 
