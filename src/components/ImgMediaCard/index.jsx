@@ -5,45 +5,24 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import PropTypes from 'prop-types'
 import { Grid, Input } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 import CheckPasswordModal from '../CheckPasswordModal';
-
-ImgMediaCard.propTypes = {
-    image: PropTypes.string,
-    Fname: PropTypes.string,
-    Lname: PropTypes.string,
-    phone: PropTypes.string,
-    email: PropTypes.string,
-    password: PropTypes.string,
-    onChange: PropTypes.func,
-}
-
-ImgMediaCard.defaultProps = {
-    image: "https://picsum.photos/200",
-    Fname: "Fname",
-    Lname: "Lname",
-    phone: "0911662463",
-    email: "example@email.com",
-    password: "########",
-    onChange: () => { }
-}
 
 export default function ImgMediaCard(props) {
     const classes = useStyles();
     const inputImg = useRef(null);
     const [edit, setEdit] = useState(true);
     const [src, setSrc] = useState(null);
+    const { control, errors } = props;
     const {
-        control,
-        errors,
-        image,
         Fname,
         Lname,
+        image,
         phone,
-        email,
-        password, } = props;
+        password,
+        email
+    } = control.defaultValuesRef.current
 
     const handleCheck = (result) => {
         setEdit(!result)  // password đúng result sẽ là true
@@ -90,11 +69,17 @@ export default function ImgMediaCard(props) {
                                     message: "Tên phải nhỏ hớn 10 ký tự!"
                                 }
                             }}
-                            render={({ onChange }) => (<Input
-                                disableUnderline={edit}
-                                // defaultValue={Fname}
-                                onChange={e => onChange(e.target.value)}
-                                readOnly={edit} />)}
+                            render={({ onChange }) => (
+                                <>
+                                    <label htmlFor="Fname" >Tên: </label>
+                                    <Input
+                                        id="Fname"
+                                        disableUnderline={edit}
+                                        defaultValue={Fname}
+                                        onChange={e => onChange(e.target.value)}
+                                        readOnly={edit} />
+                                </>
+                            )}
                         />
                         {errors.Fname && <i>{errors.Fname.message}</i>}
                     </Grid>
@@ -112,11 +97,17 @@ export default function ImgMediaCard(props) {
                                     message: "Họ phải nhỏ hớn 10 ký tự!"
                                 }
                             }}
-                            render={({ onChange }) => (<Input
-                                disableUnderline={edit}
-                                // defaultValue={Lname}
-                                onChange={e => onChange(e.target.value)}
-                                readOnly={edit} />)}
+                            render={({ onChange }) => (
+                                <>
+                                    <label htmlFor="Lname">Họ: </label>
+                                    <Input
+                                        id="Lname"
+                                        disableUnderline={edit}
+                                        defaultValue={Lname}
+                                        onChange={e => onChange(e.target.value)}
+                                        readOnly={edit} />
+                                </>
+                            )}
                         />
                         {errors.Lname && <i>{errors.Lname.message}</i>}
                     </Grid>
@@ -129,7 +120,7 @@ export default function ImgMediaCard(props) {
                                 <Input
                                     type="tel"
                                     disableUnderline={edit}
-                                    // defaultValue={phone}
+                                    defaultValue={phone}
                                     onChange={e => onChange(e.target.value)}
                                     readOnly={edit} />
                             </div>)}
@@ -154,7 +145,7 @@ export default function ImgMediaCard(props) {
                                 <Input
                                     type="email"
                                     disableUnderline={edit}
-                                    // defaultValue={email}
+                                    defaultValue={email}
                                     onChange={e => onChange(e.target.value)}
                                     readOnly={edit} />
                             </div>)}
@@ -181,7 +172,7 @@ export default function ImgMediaCard(props) {
                                     name="password"
                                     type={edit ? "hidden" : "text"}
                                     disableUnderline={edit}
-                                    // defaultValue={password}
+                                    defaultValue={password}
                                     onChange={e => onChange(e.target.value)}
                                 />
                             </div>)}
