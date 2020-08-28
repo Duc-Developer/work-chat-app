@@ -21,6 +21,12 @@ export default function GenderCheckBox({ control }) {
                     labelPlacement="top"
                 />
             </RadioGroup>)}
+            rules={{
+                required: {
+                    value: true,
+                    message: "Giới tính là cần thiết!"
+                }
+            }}
             name="gender"
             control={control}
         />

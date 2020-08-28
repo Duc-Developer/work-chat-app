@@ -26,12 +26,12 @@ const defaultValues = {
 export default function UserProfile() {
 
     const classes = useStyles();
-    const { control, handleSubmit, register } = useForm({ defaultValues });
+    const { control, handleSubmit, register, errors } = useForm({ defaultValues });
     const onSubmit = data => {
         console.log(data);
         let userId = sessionStorage.getItem("userId");
         // sửa lại input email, chuyển api vào saga, thêm validate cho input
-        updateUserProfile(userId, data)
+        // updateUserProfile(userId, data)
     };
 
     return <div className={classes.root}>
@@ -58,6 +58,7 @@ export default function UserProfile() {
                     </Grid>
                     <Grid item xs={4}>
                         <GenderCheckBox control={control} />
+                        {errors.gender && <i>{errors.gender.message}</i>}
                     </Grid>
                     <Grid item xs={12}>
                         <TextFieldController

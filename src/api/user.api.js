@@ -1,4 +1,17 @@
 import { database, storage } from '../firebase'
+import md5 from 'md5'
+
+export const checkUserPassword = (userId) => {
+    // let passwordRes = []
+    return database.ref("users/" + userId)
+            .child("password")
+            .once("value")
+            .then(snapshot => {
+                // passwordRes.push(snapshot.val())
+                return snapshot.val()
+            })
+    // return passwordRes[0]
+}
 
 export const updateUserProfile = (userId, data) => {
     let imageFile = []
@@ -41,7 +54,7 @@ export const updateUserProfile = (userId, data) => {
             gender: gender,
             introduce: introduce,
             phone: phone,
-            password: password,
+            password: md5(password),
             townShip: townShip,
             image: imageFile[0]
         })

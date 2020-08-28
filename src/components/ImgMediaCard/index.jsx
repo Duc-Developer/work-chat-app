@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button';
 import PropTypes from 'prop-types'
 import { Grid, Input } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
+import CheckPasswordModal from '../CheckPasswordModal';
 
 ImgMediaCard.propTypes = {
     image: PropTypes.string,
@@ -44,8 +45,8 @@ export default function ImgMediaCard(props) {
         email,
         password, } = props;
 
-    const handleEdit = () => {
-        setEdit(!edit)
+    const handleCheck = (result) => {
+        setEdit(!result)  // password đúng result sẽ là true
     }
 
     return (
@@ -123,6 +124,7 @@ export default function ImgMediaCard(props) {
                                 <label><b>Email: </b></label>
                                 <Input
                                     name="email"
+                                    type="email"
                                     disableUnderline={edit}
                                     defaultValue={email}
                                     onChange={e => onChange(e.target.value)}
@@ -148,12 +150,7 @@ export default function ImgMediaCard(props) {
                 </Grid>
             </CardContent>
             <CardActions>
-                <Button
-                    onClick={handleEdit}
-                    size="small"
-                    color="primary">
-                    Edit
-                </Button>
+                <CheckPasswordModal handleCheck={handleCheck} />
             </CardActions>
         </Card>
     );
