@@ -30,7 +30,7 @@ export const updateUserProfile = (userId, data) => {
         password,
         townShip } = data
     if(typeof(image) !== "string") {
-        storage.ref(`avatars/${image.name}`)
+        storage.ref(`avatars/${userId}`)
                 .put(image)
                 .snapshot
                 .ref

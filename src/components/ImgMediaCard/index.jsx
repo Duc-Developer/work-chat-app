@@ -109,6 +109,7 @@ export default function ImgMediaCard(props) {
                                 <label><b>Phone: </b></label>
                                 <Input
                                     name="phone"
+                                    type="tel"
                                     disableUnderline={edit}
                                     defaultValue={phone}
                                     onChange={e => onChange(e.target.value)}
