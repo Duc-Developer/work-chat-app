@@ -9,25 +9,26 @@ import GenderCheckBox from '../../Fields/GenderCheckBox';
 import { useDispatch } from 'react-redux';
 import { updateProfile } from '../../../actions/user.action';
 
-const defaultValues = {
-    Fname: "ddddd",
-    Lname: "",
-    townShip: "",
-    address: "",
-    city: "",
-    country: { code: "VN", label: "Vietnam", phone: "84" },
-    gender: "",
-    company: "",
-    phone: "",
-    image: "https://picsum.photos/200",
-    email: "",
-    password: ""
-}
+// const defaultValues = {
+//     Fname: "ddddd",
+//     Lname: "",
+//     townShip: "",
+//     address: "",
+//     city: "",
+//     country: { code: "VN", label: "Vietnam", phone: "84" },
+//     gender: "",
+//     company: "",
+//     phone: "",
+//     image: "https://picsum.photos/200",
+//     email: "",
+//     password: ""
+// }
 
-export default function UserProfile() {
+export default function UserProfile(props) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    const { defaultValues } = props
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
     const onSubmit = data => {
         dispatch(updateProfile(data))
@@ -91,15 +92,14 @@ export default function UserProfile() {
                     </Grid>
                 </Grid>
                 <Grid item xs={4}>
-                    <ImgMediaCard 
-                    control={control} 
-                    errors={errors} />
+                    <ImgMediaCard
+                        control={control}
+                        errors={errors} />
                 </Grid>
                 <Grid item xs={12}>
                     Danh Sách kết bạn và chờ kết bạn hiển thị ở đây
                 </Grid>
             </Grid>
         </form>
-
     </div>
 }
