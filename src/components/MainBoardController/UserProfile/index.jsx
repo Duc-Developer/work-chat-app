@@ -10,7 +10,7 @@ import { useDispatch } from 'react-redux';
 import { updateProfile } from '../../../actions/user.action';
 
 const defaultValues = {
-    Fname: "",
+    Fname: "ddddd",
     Lname: "",
     townShip: "",
     address: "",
