@@ -30,10 +30,10 @@ export default function DashBoard() {
     }, [profile.image, profile.Fname])
 
     return <div >
-        <NavBar profile={profile} />
-        <div className={classes.root}>
-            <SideBarLeft />
-            <MainBoardController />
-        </div>
+    <NavBar profile={profile} />
+    <div className={classes.root}>
+        <SideBarLeft />
+        <MainBoardController />
     </div>
+</div>
 }

@@ -31,12 +31,18 @@ export default function Auth() {
 
     const [check, setCheck] = useState(false);
     let path = window.location.pathname;
+    console.log(path)
 
     useEffect(() => {
-        if (path === "/auth/login" || path === "/auth/register") {
-            setCheck(true);
-        } else {
-            setCheck(false);
+        switch(path) {
+            case "/auth/login":
+                setCheck(true);
+                return;
+            case "/auth/register":
+                setCheck(true);
+                return;
+            default:
+                return;
         }
     },[path.length])
 
@@ -44,7 +50,7 @@ export default function Auth() {
         <AppBar position="static">
             <Toolbar>
                 <div className={classes.home}>
-                    <ButtonBase onClick={() => { history.push("/") }} >
+                    <ButtonBase  >
                         <img src={logoApp} alt="logo-app-bar" width="36px" />
                     </ButtonBase>
                 </div>
