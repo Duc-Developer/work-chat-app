@@ -6,6 +6,8 @@ import { Grid, Typography, Button } from '@material-ui/core';
 import ImgMediaCard from '../../ImgMediaCard';
 import CountrySelect from '../../Fields/CountrySelect';
 import GenderCheckBox from '../../Fields/GenderCheckBox';
+import { useDispatch } from 'react-redux';
+import { updateProfile } from '../../../actions/user.action';
 
 const defaultValues = {
     Fname: "",
@@ -25,10 +27,10 @@ const defaultValues = {
 export default function UserProfile() {
 
     const classes = useStyles();
+    const dispatch = useDispatch()
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
     const onSubmit = data => {
-        console.log(data);
-        let userId = sessionStorage.getItem("userId");
+        dispatch(updateProfile(data))
     };
 
     return <div className={classes.root}>
