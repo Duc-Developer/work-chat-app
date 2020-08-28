@@ -63,6 +63,7 @@ export default function NavBar(props) {
                     {image && <img
                         src={image}
                         alt="user-avatar"
+                        width="64px"
                         className={classes.avatar} />}
                     {!image && <Avatar >{Fname}</Avatar>}
                 </Button>

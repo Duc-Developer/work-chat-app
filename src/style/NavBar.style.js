@@ -27,6 +27,9 @@ export const NavBarUseStyles = makeStyles((theme) => ({
     },
     avatar: {
         width: "48px",
-        borderRadius: "50%"
+        height: "48px",
+        borderRadius: "50%",
+        display: "flex",
+        alignItems: "center",
     }
 }));
