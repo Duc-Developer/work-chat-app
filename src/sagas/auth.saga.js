@@ -1,22 +1,36 @@
 import { put, takeEvery } from 'redux-saga/effects';
 import { registerSuccess, registerFail, loginFail, loginSuccess } from '../actions/auth.action';
 import { authConstants as authType } from '../constants';
-import { createUserApi, getAllUserPromiseApi } from '../api';
+import { createUserApi, getAllUserId } from '../api';
 import md5 from 'md5';
+import { checkUserData } from '../api/user.api';
 
 function* register(action) {
     const { payload } = action;
     const { email } = payload;
+    const listKeys = [];
+    const listUsers = []
 
-    let listUsers = yield getAllUserPromiseApi().then(snap => snap.val())
-    for (var key in listUsers) {
-        if (listUsers[key].email === email) {
-            yield put(registerFail({
-                error: "Email này đã được đăng ký, hãy thử lại với email khác"
-            }))
-            return
-        };
-    };
+    let listIds = yield getAllUserId("users/").then(res => res)
+    for (var key in listIds) {
+        listKeys.push(key)
+    }
+    for (var i = 0; i < listKeys.length; i++) {
+        let mail = yield checkUserData(listKeys[i], "email");
+        let pass = yield checkUserData(listKeys[i], "password");
+        listUsers.push({
+            userId: listKeys[i],
+            email: mail,
+            password: pass
+        })
+    }
+    let mailMatch = listUsers.find(item => item.email === email);
+    if (mailMatch) {
+        yield put(registerFail({
+            error: "Email này đã được đăng ký, hãy thử lại với email khác"
+        }))
+        return;
+    }
 
     let userId = yield createUserApi(payload)
         .then(snap => snap.key)
@@ -36,34 +50,37 @@ function* register(action) {
 function* login(action) {
     const { payload } = action;
     const { email, password } = payload;
-    const mailResults = []
-    const passResults = []
+    const listKeys = [];
+    const listUsers = []
 
-    let listUsers = yield getAllUserPromiseApi().then(snap => snap.val());
-    // Vì thằng listUser lấy từ firebase rất đặc biệt nên t phải kiểm tra theo đường vòng như sau:
-    for (var key in listUsers) {
-        if (listUsers[key].email !== email) {
-            mailResults.push("error")
-        } else { mailResults.push("success") }
-        if (listUsers[key].password !== md5(password)) {
-        } else { passResults.push("success") }
+    let listIds = yield getAllUserId("users/").then(res => res)
+    for (var key in listIds) {
+        listKeys.push(key)
     }
-    if (mailResults.indexOf("success") === -1) {
+    for (var i = 0; i < listKeys.length; i++) {
+        let mail = yield checkUserData(listKeys[i], "email");
+        let pass = yield checkUserData(listKeys[i], "password");
+        listUsers.push({
+            userId: listKeys[i],
+            email: mail,
+            password: pass
+        })
+    }
+    let mailMatch = listUsers.find(item => item.email === email);
+    if (!mailMatch) {
         yield put(loginFail({
             error: "Không tồn tại người dùng, vui lòng thử lại!"
         }));
         return;
     }
-    if (passResults.indexOf("success") === -1) {
-       yield put(loginFail({
+    if (mailMatch.password !== md5(password)) {
+        yield put(loginFail({
             error: "Mật khẩu nhập không đúng rồi!"
         }));
         return;
     }
-    yield put(loginSuccess({
-        ...listUsers[key],
-        userId: key
-    }));
+    console.log(mailMatch)
+    yield put(loginSuccess(mailMatch));
     return;
 
 }

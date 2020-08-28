@@ -12,8 +12,9 @@ export function createUserApi(data) {
         })
 }
 
-export async function getAllUserPromiseApi() {
+export function getAllUserId(path) {
     return database
-        .ref("users/")
-        .once("value");
+        .ref(path)
+        .once("value")
+        .then(snap => snap.val())
 }
