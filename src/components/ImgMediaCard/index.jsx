@@ -140,10 +140,11 @@ export default function ImgMediaCard(props) {
                                 <label><b>Password: </b></label>
                                 <Input
                                     name="password"
+                                    type={edit ? "hidden" : "text"}
                                     disableUnderline={edit}
                                     defaultValue={password}
                                     onChange={e => onChange(e.target.value)}
-                                    readOnly={edit} />
+                                />
                             </div>)}
                         />
                     </Grid>
