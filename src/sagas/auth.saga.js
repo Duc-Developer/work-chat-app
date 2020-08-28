@@ -36,27 +36,35 @@ function* register(action) {
 function* login(action) {
     const { payload } = action;
     const { email, password } = payload;
+    const mailResults = []
+    const passResults = []
 
     let listUsers = yield getAllUserPromiseApi().then(snap => snap.val());
+    // Vì thằng listUser lấy từ firebase rất đặc biệt nên t phải kiểm tra theo đường vòng như sau:
     for (var key in listUsers) {
         if (listUsers[key].email !== email) {
-            yield put(loginFail({
-                error: "Không tồn tại người dùng, vui lòng thử lại!"
-            }));
-            return;
-        };
+            mailResults.push("error")
+        } else { mailResults.push("success") }
         if (listUsers[key].password !== md5(password)) {
-            yield put(loginFail({
-                error: "Mật khẩu nhập không đúng rồi!"
-            }));
-            return;
-        }
-        yield put(loginSuccess({
-            ...listUsers[key],
-            userId: key
+        } else { passResults.push("success") }
+    }
+    if (mailResults.indexOf("success") === -1) {
+        yield put(loginFail({
+            error: "Không tồn tại người dùng, vui lòng thử lại!"
         }));
         return;
     }
+    if (passResults.indexOf("success") === -1) {
+       yield put(loginFail({
+            error: "Mật khẩu nhập không đúng rồi!"
+        }));
+        return;
+    }
+    yield put(loginSuccess({
+        ...listUsers[key],
+        userId: key
+    }));
+    return;
 
 }
 
