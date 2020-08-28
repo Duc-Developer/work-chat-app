@@ -1,10 +1,10 @@
 import { database, storage } from '../firebase'
 import md5 from 'md5'
 
-export const checkUserPassword = (userId) => {
+export const checkUserData = (userId, typeCheck) => {
     // let passwordRes = []
     return database.ref("users/" + userId)
-            .child("password")
+            .child(typeCheck)
             .once("value")
             .then(snapshot => {
                 // passwordRes.push(snapshot.val())

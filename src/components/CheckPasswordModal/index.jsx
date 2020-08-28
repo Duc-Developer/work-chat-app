@@ -4,7 +4,7 @@ import Modal from '@material-ui/core/Modal';
 import { Button, Input, IconButton } from '@material-ui/core';
 import VisibilityIcon from '@material-ui/icons/Visibility';
 import VisibilityOffIcon from '@material-ui/icons/VisibilityOff';
-import { checkUserPassword } from '../../api/user.api';
+import { checkUserData } from '../../api/user.api';
 import Alert from '@material-ui/lab/Alert';
 import md5 from 'md5';
 
@@ -58,7 +58,7 @@ export default function CheckPasswordModal(props) {
 
     const handleOnClick = async () => {
         let userId = sessionStorage.getItem("userId")
-        let password = await checkUserPassword(userId)
+        let password = await checkUserData(userId,"password")
         if (md5(pass) === password) {
             props.handleCheck(true)
             setOpen(false)

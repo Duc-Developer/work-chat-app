@@ -28,7 +28,7 @@ export default function NavBar(props) {
 
     const classes = useStyles();
     const history = useHistory();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const { image, Fname } = props.profile;
 
     const handleLogOut = () => {
@@ -39,6 +39,7 @@ export default function NavBar(props) {
     const handleClickAvatar = () => {
         dispatch(controlMainBoard("userProfile"))
     }
+    
 
     return <div className={classes.root}>
         <AppBar position="static">
