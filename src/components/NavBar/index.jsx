@@ -1,7 +1,6 @@
 import React from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import logoApp from '../../images/work-chat-logo.png';
 import FormControl from '@material-ui/core/FormControl';
@@ -12,6 +11,7 @@ import { useHistory } from 'react-router';
 import { NavBarUseStyles as useStyles } from '../../style';
 import { useDispatch } from 'react-redux';
 import { controlMainBoard } from '../../actions/mainBoardControl.action';
+import Avatar from '@material-ui/core/Avatar';
 
 NavBar.propTypes = {
     profile: PropTypes.object
@@ -60,14 +60,12 @@ export default function NavBar(props) {
                 <Button 
                 onClick={handleClickAvatar}
                 className={classes.avatar}>
-                    <img
+                    {image && <img
                         src={image}
                         alt="user-avatar"
-                        className={classes.avatar} />
+                        className={classes.avatar} />}
+                    {!image && <Avatar >{Fname}</Avatar>}
                 </Button>
-                <Typography variant="h6">
-                    {Fname}
-                </Typography>
                 <Button 
                 onClick={handleLogOut}
                 color="inherit">Đăng xuất</Button>
