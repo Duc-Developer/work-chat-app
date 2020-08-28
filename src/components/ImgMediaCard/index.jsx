@@ -53,6 +53,8 @@ export default function ImgMediaCard(props) {
         <Card className={classes.root}>
             <CardActionArea onClick={() => inputImg.current.click()} >
                 <Controller
+                    control={control}
+                    name="image"
                     render={({ onChange }) => (<Input
                         type="file"
                         onChange={(e) => {
@@ -63,8 +65,6 @@ export default function ImgMediaCard(props) {
                         inputRef={inputImg}
                         id="file"
                         style={{ display: "none" }} />)}
-                    control={control}
-                    name="image"
                 />
                 <CardMedia
                     component="img"
@@ -91,9 +91,8 @@ export default function ImgMediaCard(props) {
                                 }
                             }}
                             render={({ onChange }) => (<Input
-                                label="Fname"
                                 disableUnderline={edit}
-                                defaultValue={Fname}
+                                // defaultValue={Fname}
                                 onChange={e => onChange(e.target.value)}
                                 readOnly={edit} />)}
                         />
@@ -114,10 +113,8 @@ export default function ImgMediaCard(props) {
                                 }
                             }}
                             render={({ onChange }) => (<Input
-                                label="Lname"
-                                name="Lname"
                                 disableUnderline={edit}
-                                defaultValue={Lname}
+                                // defaultValue={Lname}
                                 onChange={e => onChange(e.target.value)}
                                 readOnly={edit} />)}
                         />
@@ -130,10 +127,9 @@ export default function ImgMediaCard(props) {
                             render={({ onChange }) => (<div>
                                 <label><b>Phone: </b></label>
                                 <Input
-                                    name="phone"
                                     type="tel"
                                     disableUnderline={edit}
-                                    defaultValue={phone}
+                                    // defaultValue={phone}
                                     onChange={e => onChange(e.target.value)}
                                     readOnly={edit} />
                             </div>)}
@@ -156,10 +152,9 @@ export default function ImgMediaCard(props) {
                             render={({ onChange }) => (<div>
                                 <label><b>Email: </b></label>
                                 <Input
-                                    name="email"
                                     type="email"
                                     disableUnderline={edit}
-                                    defaultValue={email}
+                                    // defaultValue={email}
                                     onChange={e => onChange(e.target.value)}
                                     readOnly={edit} />
                             </div>)}
@@ -186,7 +181,7 @@ export default function ImgMediaCard(props) {
                                     name="password"
                                     type={edit ? "hidden" : "text"}
                                     disableUnderline={edit}
-                                    defaultValue={password}
+                                    // defaultValue={password}
                                     onChange={e => onChange(e.target.value)}
                                 />
                             </div>)}

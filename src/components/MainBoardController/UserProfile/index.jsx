@@ -27,7 +27,7 @@ const defaultValues = {
 export default function UserProfile() {
 
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
     const onSubmit = data => {
         dispatch(updateProfile(data))

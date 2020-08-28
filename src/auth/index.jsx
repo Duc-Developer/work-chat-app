@@ -30,15 +30,15 @@ export default function Auth() {
     const classes = useStyles();
 
     const [check, setCheck] = useState(false);
+    let path = window.location.pathname;
 
     useEffect(() => {
-        let path = window.location.pathname;
         if (path === "/auth/login" || path === "/auth/register") {
             setCheck(true);
         } else {
             setCheck(false);
         }
-    })
+    },[path.length])
 
     return <div className={classes.root}>
         <AppBar position="static">
