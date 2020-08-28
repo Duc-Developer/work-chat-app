@@ -50,7 +50,7 @@ export default function Auth() {
         <AppBar position="static">
             <Toolbar>
                 <div className={classes.home}>
-                    <ButtonBase  >
+                    <ButtonBase onClick={() => {history.push("/")}}  >
                         <img src={logoApp} alt="logo-app-bar" width="36px" />
                     </ButtonBase>
                 </div>
