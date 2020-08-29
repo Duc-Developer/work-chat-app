@@ -5,7 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Grid, Input } from '@material-ui/core';
+import { Grid, Input, InputLabel } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 import CheckPasswordModal from '../CheckPasswordModal';
 
@@ -71,7 +71,7 @@ export default function ImgMediaCard(props) {
                             }}
                             render={({ onChange }) => (
                                 <>
-                                    <label htmlFor="Fname" >Tên: </label>
+                                    <InputLabel htmlFor="Fname" >Tên: </InputLabel>
                                     <Input
                                         id="Fname"
                                         disableUnderline={edit}
@@ -99,7 +99,7 @@ export default function ImgMediaCard(props) {
                             }}
                             render={({ onChange }) => (
                                 <>
-                                    <label htmlFor="Lname">Họ: </label>
+                                    <InputLabel htmlFor="Lname">Họ: </InputLabel>
                                     <Input
                                         id="Lname"
                                         disableUnderline={edit}
