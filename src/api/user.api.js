@@ -33,37 +33,23 @@ export const updateUserProfile = async (userId, data) => {
         phone,
         password,
         townShip } = data;
-    if (typeof (image) !== "string") {
-        let uploadTask = storage
-            .ref()
-            .child(`avatars/avatarOf${userId}`).put(image);
-        uploadTask.on('state_changed',
-            (snapshot) => { },
-            (errors) => errors.message,
-            () => {
-                uploadTask
-                    .snapshot
-                    .ref
-                    .getDownloadURL()
-                    .then(url => {
-                        database
-                            .ref("users/" + userId)
-                            .set({
-                                Fname: Fname,
-                                Lname: Lname,
-                                address: address,
-                                city: city,
-                                company: company,
-                                country: country,
-                                email: email,
-                                gender: gender,
-                                introduce: introduce,
-                                phone: phone,
-                                password: md5(password),
-                                townShip: townShip,
-                                image: url
-                            })
-                    })
+    if (!image) {
+        database
+            .ref("users/" + userId)
+            .set({
+                Fname: Fname,
+                Lname: Lname,
+                address: address,
+                city: city,
+                company: company,
+                country: country,
+                email: email,
+                gender: gender,
+                introduce: introduce,
+                phone: phone,
+                password: md5(password),
+                townShip: townShip,
+                image: "https://picsum.photos/200"
             })
         return;
     } else {

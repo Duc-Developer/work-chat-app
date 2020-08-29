@@ -4,9 +4,19 @@ import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Controller } from "react-hook-form";
 import { countries } from './countries'
 
-export default function CountrySelect({ control }) {
+export default function CountrySelect(props) {
+  const { control } = props
+  const { country } = control.defaultValuesRef.current
   return (
     <Controller
+      name="country"
+      control={control}
+      rules={{
+        required: {
+          value: true,
+          message: "Bạn là người không có tổ quốc ư???"
+        }
+      }}
       render={props => (
         <Autocomplete
           {...props}
@@ -29,8 +39,6 @@ export default function CountrySelect({ control }) {
           onChange={(_, data) => props.onChange(data)}
         />
       )}
-      name="country"
-      control={control}
     />
   );
 }

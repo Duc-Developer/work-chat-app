@@ -115,6 +115,12 @@ export default function ImgMediaCard(props) {
                         <Controller
                             control={control}
                             name="phone"
+                            rules={{
+                                required: {
+                                    value: true,
+                                    message: "Số điện thoại là cần thiết!"
+                                }
+                            }}
                             render={({ onChange }) => (<div>
                                 <label><b>Phone: </b></label>
                                 <Input
@@ -125,6 +131,7 @@ export default function ImgMediaCard(props) {
                                     readOnly={edit} />
                             </div>)}
                         />
+                        {errors.phone && <i>{errors.phone.message}</i>}
                     </Grid>
                     <Grid item xs={12}>
                         <Controller

@@ -31,7 +31,7 @@ export default function UserProfile(props) {
     const { defaultValues } = props
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
     const onSubmit = data => {
-        dispatch(updateProfile(data))
+        dispatch(updateProfile(data));
     };
 
     return <div className={classes.root}>
@@ -80,6 +80,7 @@ export default function UserProfile(props) {
                     </Grid>
                     <Grid item xs={4}>
                         <CountrySelect control={control} />
+                        {errors.country && <i>{errors.country.message}</i>}
                     </Grid>
                     <Grid item xs={12}>
                         <TextFieldController
