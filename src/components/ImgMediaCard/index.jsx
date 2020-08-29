@@ -14,6 +14,7 @@ export default function ImgMediaCard(props) {
     const inputImg = useRef(null);
     const [edit, setEdit] = useState(true);
     const [src, setSrc] = useState(null);
+    const [passView, setPassView] = useState(null)
     const { control, errors } = props;
     const {
         Fname,
@@ -25,8 +26,10 @@ export default function ImgMediaCard(props) {
     } = control.defaultValuesRef.current
 
     const handleCheck = (result) => {
-        setEdit(!result)  // password đúng result sẽ là true
+        setEdit(!result.status);  // password đúng result.status sẽ là true
+        setPassView(result.passDecoded); // cho ng dùng nhìn thấy mật khẩu thay vì mật khẩu bị mã hóa mặc định lấy từ server
     }
+    console.log(passView)
 
     return (
         <Card className={classes.root}>
@@ -175,13 +178,24 @@ export default function ImgMediaCard(props) {
                             }}
                             render={({ onChange }) => (<div>
                                 <label><b>Password: </b></label>
-                                <Input
-                                    name="password"
-                                    type={edit ? "hidden" : "text"}
-                                    disableUnderline={edit}
-                                    defaultValue={password}
-                                    onChange={e => onChange(e.target.value)}
-                                />
+                                {
+                                    !passView && <Input
+                                        name="password"
+                                        type={edit ? "hidden" : "text"}
+                                        disableUnderline={edit}
+                                        defaultValue={password}
+                                        onChange={e => onChange(e.target.value)}
+                                    />
+                                }
+                                {
+                                    passView && <Input
+                                        name="password"
+                                        type={edit ? "hidden" : "text"}
+                                        disableUnderline={edit}
+                                        defaultValue={passView}
+                                        onChange={e => onChange(e.target.value)}
+                                    />
+                                }
                             </div>)}
                         />
                         {errors.password && <i>{errors.password.message}</i>}

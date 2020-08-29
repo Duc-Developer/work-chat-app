@@ -60,7 +60,10 @@ export default function CheckPasswordModal(props) {
         let userId = sessionStorage.getItem("userId")
         let password = await checkUserData(userId,"password")
         if (md5(pass) === password) {
-            props.handleCheck(true)
+            props.handleCheck({
+                status: true,
+                passDecoded: pass
+            })
             setOpen(false)
         } else {
             setError("Đừng cố hack làm gì :)))")
