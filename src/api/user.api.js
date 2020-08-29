@@ -20,20 +20,7 @@ export const checkUserData = (userId, typeCheck) => {
 }
 
 export const updateUserProfile = async (userId, data) => {
-    const {
-        Fname,
-        Lname,
-        image,
-        address,
-        city,
-        company,
-        country,
-        email,
-        gender,
-        introduce,
-        phone,
-        password,
-        townShip } = data;
+    const { image, } = data;
 
     switch (typeof (image)) {
         case undefined:
