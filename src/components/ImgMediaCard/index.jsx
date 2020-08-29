@@ -29,7 +29,6 @@ export default function ImgMediaCard(props) {
         setEdit(!result.status);  // password đúng result.status sẽ là true
         setPassView(result.passDecoded); // cho ng dùng nhìn thấy mật khẩu thay vì mật khẩu bị mã hóa mặc định lấy từ server
     }
-    console.log(passView)
 
     return (
         <Card className={classes.root}>
