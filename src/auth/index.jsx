@@ -31,7 +31,6 @@ export default function Auth() {
 
     const [check, setCheck] = useState(false);
     let path = window.location.pathname;
-    console.log(path)
 
     useEffect(() => {
         switch(path) {

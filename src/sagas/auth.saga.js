@@ -79,7 +79,6 @@ function* login(action) {
         }));
         return;
     }
-    console.log(mailMatch)
     yield put(loginSuccess(mailMatch));
     return;
 
