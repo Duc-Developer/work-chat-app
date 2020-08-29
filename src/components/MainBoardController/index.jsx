@@ -5,6 +5,8 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { checkUserData } from '../../api/user.api';
 import { useState } from 'react';
+import Loading from '../Loading';
+import './MainBoardController.css'
 
 export default function MainBoardController() {
 
@@ -16,7 +18,6 @@ export default function MainBoardController() {
         async function getData() {
             let profile = await checkUserData("", userId)
             setValue(profile)
-            console.log(defaultValues, profile)
         }
         getData()
     }, [])
@@ -25,8 +26,9 @@ export default function MainBoardController() {
         {typeControl === "userProfile"
             && <div>
                 {
-                    !defaultValues ? <div>Loading...</div> :
-                        <UserProfile defaultValues={defaultValues} />
+                    !defaultValues
+                        ? <Loading type="line" color="secondary" />
+                        : <UserProfile defaultValues={defaultValues} />
                 }
             </div>}
         {typeControl === "chatOnBoard" && <ChatOnBoard />}
