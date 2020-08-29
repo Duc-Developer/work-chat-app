@@ -6,12 +6,13 @@ import MainBoardController from '../MainBoardController';
 import { useHistory } from 'react-router-dom';
 import { checkUserData } from '../../api/user.api';
 import { useState } from 'react';
+import Loading from '../Loading';
 
 export default function DashBoard() {
 
     const classes = useStyles();
     const history = useHistory();
-    const [profile, setProfile] = useState({})
+    const [profile, setProfile] = useState(null)
 
     useEffect(() => {
         let userId = sessionStorage.getItem("userId");
@@ -28,13 +29,15 @@ export default function DashBoard() {
             })
         }
         getUser()
-    }, [profile.image, profile.Fname])
+    }, [profile])
 
-    return <div >
-    <NavBar profile={profile} />
-    <div className={classes.root}>
-        <SideBarLeft profile={profile} />
-        <MainBoardController />
-    </div>
-</div>
+    return !profile
+        ? <Loading type="circular" size="100px" />
+        : <div >
+            <NavBar profile={profile} />
+            <div className={classes.root}>
+                <SideBarLeft profile={profile} />
+                <MainBoardController />
+            </div>
+        </div>
 }
