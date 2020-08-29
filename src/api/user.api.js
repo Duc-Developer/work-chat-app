@@ -2,6 +2,14 @@ import { database, storage } from '../firebase'
 import md5 from 'md5'
 
 export const checkUserData = (userId, typeCheck) => {
+    if (userId === "users") {
+        return database.ref(`${userId}/${typeCheck}`)
+            // .child(typeCheck)
+            .once("value")
+            .then(snapshot => {
+                return snapshot.val()
+            })
+    }
     return database.ref("users/" + userId)
         .child(typeCheck)
         .once("value")

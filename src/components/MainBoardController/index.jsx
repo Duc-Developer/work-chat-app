@@ -16,7 +16,7 @@ export default function MainBoardController() {
     useEffect(() => {
         let userId = sessionStorage.getItem("userId")
         async function getData() {
-            let profile = await checkUserData("", userId)
+            let profile = await checkUserData("users", userId)
             setValue(profile)
         }
         getData()
