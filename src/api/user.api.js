@@ -34,58 +34,49 @@ export const updateUserProfile = async (userId, data) => {
         phone,
         password,
         townShip } = data;
-    if (image) {
-        let uploadTask = storage
-            .ref()
-            .child(`avatars/avatarOf${userId}`).put(image);
-        uploadTask.on('state_changed',
-            (snapshot) => { },
-            (errors) => errors.message,
-            () => {
-                uploadTask
-                    .snapshot
-                    .ref
-                    .getDownloadURL()
-                    .then(url => {
-                        database
-                            .ref("users/" + userId)
-                            .set({
-                                Fname: Fname,
-                                Lname: Lname,
-                                address: address,
-                                city: city,
-                                company: company,
-                                country: country,
-                                email: email,
-                                gender: gender,
-                                introduce: introduce,
-                                phone: phone,
-                                password: password,
-                                townShip: townShip,
-                                image: url
-                            })
-                    })
-            })
-        return;
-    } else {
-        return database
-            .ref("users/" + userId)
-            .set({
-                Fname: Fname,
-                Lname: Lname,
-                address: address,
-                city: city,
-                company: company,
-                country: country,
-                email: email,
-                gender: gender,
-                introduce: introduce,
-                phone: phone,
-                password: password,
-                townShip: townShip,
-                image: "https://picsum.photos/200"
-            })
-            .then(snap => snap)
-            .catch(error => error)
+
+    switch (typeof (image)) {
+        case undefined:
+            let uploadTask = storage
+                .ref()
+                .child(`avatars/avatarOf${userId}`).put(image);
+            uploadTask.on('state_changed',
+                (snapshot) => { },
+                (errors) => errors.message,
+                () => {
+                    uploadTask
+                        .snapshot
+                        .ref
+                        .getDownloadURL()
+                        .then(url => {
+                            database
+                                .ref("users/" + userId)
+                                .set({
+                                    ...data,
+                                    image: url
+                                })
+                        })
+                })
+            return;
+        case "string":
+            database
+                .ref("users/" + userId)
+                .set({
+                    ...data,
+                    image: image
+                })
+                .then(snap => snap)
+                .catch(error => error);
+            return;
+        default:
+            database
+                .ref("users/" + userId)
+                .set({
+                    ...data,
+                    image: "https://picsum.photos/200"
+                })
+                .then(snap => snap)
+                .catch(error => error);
+            return;
     }
 }
