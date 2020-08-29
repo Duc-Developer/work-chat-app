@@ -12,6 +12,7 @@ import { NavBarUseStyles as useStyles } from '../../style';
 import { useDispatch } from 'react-redux';
 import { controlMainBoard } from '../../actions/mainBoardControl.action';
 import Avatar from '@material-ui/core/Avatar';
+import { Typography } from '@material-ui/core';
 
 NavBar.propTypes = {
     profile: PropTypes.object
@@ -57,14 +58,17 @@ export default function NavBar(props) {
                         className={classes.inputRoot}
                         placeholder="Search…" />
                 </FormControl>
-                <Button 
-                onClick={handleClickAvatar}
-                className={classes.avatar}>
-                    {image && <img
+                <Button onClick={handleClickAvatar}>
+                    {image && <div className={classes.wrapAvatar}>
+                        <Typography variant="h6">
+                            {Fname}
+                            </Typography>
+                        <img
                         src={image}
                         alt="user-avatar"
                         width="64px"
-                        className={classes.avatar} />}
+                        className={classes.avatar} />
+                    </div> }
                     {!image && <Avatar >{Fname}</Avatar>}
                 </Button>
                 <Button 

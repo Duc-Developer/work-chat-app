@@ -29,7 +29,10 @@ export const NavBarUseStyles = makeStyles((theme) => ({
         width: "48px",
         height: "48px",
         borderRadius: "50%",
+    },
+    wrapAvatar: {
         display: "flex",
         alignItems: "center",
+        justifyContent: "space-between",
     }
 }));
