@@ -23,7 +23,8 @@ export default function DashBoard() {
             let Fname = await checkUserData(userId, "Fname");
             setProfile({
                 image: image,
-                Fname: Fname
+                Fname: Fname,
+                userId: userId
             })
         }
         getUser()
@@ -32,7 +33,7 @@ export default function DashBoard() {
     return <div >
     <NavBar profile={profile} />
     <div className={classes.root}>
-        <SideBarLeft />
+        <SideBarLeft profile={profile} />
         <MainBoardController />
     </div>
 </div>
