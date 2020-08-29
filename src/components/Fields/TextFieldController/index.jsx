@@ -10,24 +10,30 @@ TextFieldController.propTypes = {
     label: PropTypes.string,
     rows: PropTypes.number,
     multiline: PropTypes.bool,
-    variant: PropTypes.string
+    variant: PropTypes.string,
+    margin: PropTypes.string,
+    placeholder: PropTypes.string,
 }
 
 export default function TextFieldController(props) {
 
     const { 
         name, 
+        margin,
         handleChange, 
         inputRef, 
         defaultValue,
         rows,
         multiline,
         variant, 
+        placeholder,
         label } = props;
 
     return <div>
         <TextField 
         fullWidth
+        placeholder={placeholder}
+        margin={margin}
         variant={variant}
         multiline={multiline}
         rows={rows}
