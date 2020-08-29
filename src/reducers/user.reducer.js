@@ -11,6 +11,12 @@ export const userReducer = (state =initialState, action) => {
         case userType.UPDATE_USER_FAIL:
             alert("Cập nhật thất bại, hãy kiểm tra lại đường truyền!")
             return state;
+        case userType.ADD_FRIEND_REQUEST_SUCCESS:
+            alert("Gửi yêu cầu kết bạn thành công!");
+            return state;
+        case userType.ADD_FRIEND_REQUEST_FAIL:
+            alert("Kiểm tra lại đường truyền!");
+            return state;
         default:
             return state;
     }

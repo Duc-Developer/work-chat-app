@@ -8,8 +8,9 @@ import { SideBarLeftUseStyles as useStyles } from '../../../style'
 import RoomCard from '../../RoomCard';
 import { useDispatch } from 'react-redux';
 import { controlMainBoard } from '../../../actions/mainBoardControl.action';
+import AddFriendFormModal from '../../AddFriendFormModal';
 
-export default function SideBarLeft() {
+export default function SideBarLeft(props) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -29,9 +30,10 @@ export default function SideBarLeft() {
                 align="center">
                 Work Chat
             </Typography>
-            <IconButton>
+            {/* <IconButton>
                 <AddBoxIcon />
-            </IconButton>
+            </IconButton> */}
+            <AddFriendFormModal profile={props.profile} />
         </div>
         <FormControl>
             <div className={classes.search}>

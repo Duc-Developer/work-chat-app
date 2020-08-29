@@ -12,7 +12,7 @@ export default function DashBoard() {
 
     const classes = useStyles();
     const history = useHistory();
-    const [profile, setProfile] = useState(null)
+    const [profile, setProfile] = useState({})
 
     useEffect(() => {
         let userId = sessionStorage.getItem("userId");
@@ -29,7 +29,7 @@ export default function DashBoard() {
             })
         }
         getUser()
-    }, [profile])
+    }, [profile.name, profile.Fname, profile.userId])
 
     return !profile
         ? <Loading type="circular" size="100px" />

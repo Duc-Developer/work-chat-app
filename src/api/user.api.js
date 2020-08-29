@@ -19,7 +19,7 @@ export const checkUserData = (userId, typeCheck) => {
 
 }
 
-export const updateUserProfile = async (userId, data) => {
+export const updateUserProfile = (userId, data) => {
     const { image, } = data;
 
     switch (typeof (image)) {
@@ -27,7 +27,7 @@ export const updateUserProfile = async (userId, data) => {
             let uploadTask = storage
                 .ref()
                 .child(`avatars/avatarOf${userId}`).put(image);
-            uploadTask.on('state_changed',
+            return uploadTask.on('state_changed',
                 (snapshot) => { },
                 (errors) => errors.message,
                 () => {
@@ -44,9 +44,8 @@ export const updateUserProfile = async (userId, data) => {
                                 })
                         })
                 })
-            return;
         case "string":
-            database
+            return database
                 .ref("users/" + userId)
                 .set({
                     ...data,
@@ -54,9 +53,8 @@ export const updateUserProfile = async (userId, data) => {
                 })
                 .then(snap => snap)
                 .catch(error => error);
-            return;
         default:
-            database
+            return database
                 .ref("users/" + userId)
                 .set({
                     ...data,
@@ -64,6 +62,12 @@ export const updateUserProfile = async (userId, data) => {
                 })
                 .then(snap => snap)
                 .catch(error => error);
-            return;
     }
+}
+
+export const createValueForUserApi = (path, data) => {
+    return database
+        .ref(path)
+        .update(data)
+        .catch(error => error);
 }
