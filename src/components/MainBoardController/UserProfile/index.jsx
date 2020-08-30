@@ -134,7 +134,7 @@ export default function UserProfile(props) {
                                     userId={item.userId}
                                     active1={false}
                                     nameButton2="unfollow"
-                                    handleAction2={() => {console.log("click")}}
+                                    handleAction2={() => {console.log("unfollow")}}
                                     />
                                 </Grid>
                             })
@@ -142,7 +142,27 @@ export default function UserProfile(props) {
                     </Grid>
                 </Grid>
                 <Grid container item xs={6}>
-                    list request here
+                <Grid item xs={12}>
+                        <Typography variant="h6">
+                            Danh sách kết bạn chờ phản hồi
+                        </Typography>
+                        {
+                            friendRequestData && 
+                            friendRequestData.map(item => {
+                                return <Grid item xs={8} key={item.userId}>
+                                    <FriendCard
+                                    image={item.image}
+                                    Fname={item.Fname}
+                                    userId={item.userId}
+                                    nameButton1="acept"
+                                    handleAction1={() => {console.log("acept")}}
+                                    nameButton2="deny"
+                                    handleAction2={() => {console.log("deny")}}
+                                    />
+                                </Grid>
+                            })
+                        }
+                    </Grid>
                 </Grid>
             </Grid>
         }
