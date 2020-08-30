@@ -43,7 +43,6 @@ function* addFriendRequest(action) {
         Fname: myProfile.Fname,
         image: myProfile.image
     });
-    console.log(res1, res2)
     if(!res1 && !res2) {
         yield put(addFriendRequestSuccess(payload));
         return;
