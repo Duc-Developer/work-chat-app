@@ -8,35 +8,26 @@ import CountrySelect from '../../Fields/CountrySelect';
 import GenderCheckBox from '../../Fields/GenderCheckBox';
 import { useDispatch } from 'react-redux';
 import { updateProfile } from '../../../actions/user.action';
+import { useState } from 'react';
 
-// const defaultValues = {
-//     Fname: "ddddd",
-//     Lname: "",
-//     townShip: "",
-//     address: "",
-//     city: "",
-//     country: { code: "VN", label: "Vietnam", phone: "84" },
-//     gender: "",
-//     company: "",
-//     phone: "",
-//     image: "https://picsum.photos/200",
-//     email: "",
-//     password: ""
-// }
 
 export default function UserProfile(props) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { defaultValues } = props
+    const { defaultValues } = props;
+    const [status, setStatus] = useState("profile");
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
     const onSubmit = data => {
         dispatch(updateProfile(data));
     };
 
+
     return <div className={classes.root}>
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container spacing={2}>
+        {
+            status === "profile" &&
+            <form onSubmit={handleSubmit(onSubmit)}>
+            <Grid container >
                 <Grid item xs={8}>
                     <Typography align="center" variant="h3" color="primary">
                         Your Profile
@@ -97,10 +88,37 @@ export default function UserProfile(props) {
                         control={control}
                         errors={errors} />
                 </Grid>
-                <Grid item xs={12}>
-                    Danh Sách kết bạn và chờ kết bạn hiển thị ở đây
-                </Grid>
             </Grid>
         </form>
+        }
+        {
+            status === "friends" &&
+            <Grid container>
+                <Grid container item xs={6}>
+                    list follow here
+                </Grid>
+                <Grid container item xs={6}>
+                    list request here
+                </Grid>
+            </Grid>
+        }
+        <Grid container>
+            <Grid item xs={2}>
+                <Button 
+                onClick={() => {setStatus("friends")}}
+                variant="contained" 
+                color="secondary">
+                    Friends
+                </Button>
+            </Grid>
+            <Grid item xs={2}>
+                <Button 
+                onClick={() => {setStatus("profile")}}
+                variant="contained" 
+                color="secondary">
+                    My Profile
+                </Button>
+            </Grid>
+        </Grid>
     </div>
 }
