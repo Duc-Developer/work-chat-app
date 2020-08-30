@@ -9,6 +9,8 @@ import GenderCheckBox from '../../Fields/GenderCheckBox';
 import { useDispatch } from 'react-redux';
 import { updateProfile } from '../../../actions/user.action';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import FriendCard from '../../FriendCard';
 
 
 export default function UserProfile(props) {
@@ -17,11 +19,34 @@ export default function UserProfile(props) {
     const dispatch = useDispatch();
     const { defaultValues } = props;
     const [status, setStatus] = useState("profile");
+    const [followingData, setFollowingData] = useState([]);
+    const [friendRequestData, setFriendRequestData] = useState([]);
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
+    
     const onSubmit = data => {
         dispatch(updateProfile(data));
     };
-
+    
+    useEffect(() => {
+        let followings = [];
+        let friendRequests = [];
+        if(defaultValues) {
+            for (var key in defaultValues.following) {
+                followings.push({
+                    ...defaultValues.following[key],
+                    userId: key
+                });
+            }
+            for (var i in defaultValues.friendRequest) {
+                friendRequests.push({
+                    ...defaultValues.friendRequest[i],
+                    userId: key
+                });
+            }
+        }
+        setFollowingData(followings);
+        setFriendRequestData(friendRequests);
+    }, [followingData.length, friendRequestData.length]);
 
     return <div className={classes.root}>
         {
@@ -95,7 +120,26 @@ export default function UserProfile(props) {
             status === "friends" &&
             <Grid container>
                 <Grid container item xs={6}>
-                    list follow here
+                    <Grid item xs={12}>
+                        <Typography variant="h6">
+                            Danh sách bạn đang theo dõi
+                        </Typography>
+                        {
+                            followingData && 
+                            followingData.map(item => {
+                                return <Grid item xs={8} key={item.userId}>
+                                    <FriendCard
+                                    image={item.image}
+                                    Fname={item.Fname}
+                                    userId={item.userId}
+                                    active1={false}
+                                    nameButton2="unfollow"
+                                    handleAction2={() => {console.log("click")}}
+                                    />
+                                </Grid>
+                            })
+                        }
+                    </Grid>
                 </Grid>
                 <Grid container item xs={6}>
                     list request here
@@ -116,7 +160,7 @@ export default function UserProfile(props) {
                 onClick={() => {setStatus("profile")}}
                 variant="contained" 
                 color="secondary">
-                    My Profile
+                    Profile
                 </Button>
             </Grid>
         </Grid>
