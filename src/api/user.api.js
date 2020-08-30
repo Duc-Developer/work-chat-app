@@ -1,4 +1,5 @@
 import { database, storage } from '../firebase'
+import { object } from 'prop-types'
 
 export const checkUserData = (userId, typeCheck) => {
     if (userId === "users") {
@@ -23,7 +24,7 @@ export const updateUserProfile = (userId, data) => {
     const { image, } = data;
 
     switch (typeof (image)) {
-        case undefined:
+        case "object":
             let uploadTask = storage
                 .ref()
                 .child(`avatars/avatarOf${userId}`).put(image);
