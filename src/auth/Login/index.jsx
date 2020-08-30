@@ -25,6 +25,7 @@ export default function Login() {
                 <Grid item xs={12} >
                     <TextField
                         fullWidth
+                        autoFocus
                         inputRef={register({
                             required: {
                                 value: true,
