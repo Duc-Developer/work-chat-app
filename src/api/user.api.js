@@ -39,7 +39,7 @@ export const updateUserProfile = (userId, data) => {
                         .then(url => {
                             database
                                 .ref("users/" + userId)
-                                .set({
+                                .update({
                                     ...data,
                                     image: url
                                 })
@@ -48,7 +48,7 @@ export const updateUserProfile = (userId, data) => {
         case "string":
             return database
                 .ref("users/" + userId)
-                .set({
+                .update({
                     ...data,
                     image: image
                 })
@@ -57,7 +57,7 @@ export const updateUserProfile = (userId, data) => {
         default:
             return database
                 .ref("users/" + userId)
-                .set({
+                .update({
                     ...data,
                     image: "https://picsum.photos/200"
                 })
