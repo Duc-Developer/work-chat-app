@@ -15,7 +15,7 @@ export const userReducer = (state =initialState, action) => {
             alert("Gửi yêu cầu kết bạn thành công!");
             return state;
         case userType.ADD_FRIEND_REQUEST_FAIL:
-            alert("Kiểm tra lại đường truyền!");
+            alert("Kiểm tra lại danh sách chờ kết bạn hoặc đường truyền!");
             return state;
         default:
             return state;

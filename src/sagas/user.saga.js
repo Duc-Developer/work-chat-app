@@ -31,6 +31,14 @@ function* addFriendRequest(action) {
     let { payload } = action;
     let { idRes, myProfile } = payload;
     let { userId } = myProfile;
+    let myFriendRequest = yield checkUserData(userId, "friendRequest");
+
+    for (var key in myFriendRequest) {
+        if(key === idRes) {
+            yield put(addFriendRequestFail(payload));
+            return;
+        }
+    }
     let friendImage = yield checkUserData(idRes,"image");
     let friendFname = yield checkUserData(idRes,"Fname");
     let pathOfFriend = `users/${idRes}/friendRequest/${userId}/`;
