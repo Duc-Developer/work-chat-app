@@ -64,7 +64,7 @@ export default function SideBarLeft(props) {
         <div className={classes.rooms}>
             <div className={classes.wrapRooms}>
                 {
-                    !listRooms.length ? <Loading type="inline" /> : listRooms.map((item) => {
+                    !listRooms.length ? <Loading type="line" /> : listRooms.map((item) => {
 
                         const { users } = item;
                         const userInbox = users[0].userId === myId
