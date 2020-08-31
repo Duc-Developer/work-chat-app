@@ -1,5 +1,4 @@
-import { database, storage } from '../firebase'
-import { object } from 'prop-types'
+import { database, storage } from '../firebase';
 import moment from 'moment'
 
 export const checkUserData = (userId, typeCheck) => {

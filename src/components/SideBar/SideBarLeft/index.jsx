@@ -3,21 +3,40 @@ import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
 import AddBoxIcon from '@material-ui/icons/AddBox';
 import { ButtonBase, InputBase, IconButton, Typography, FormControl } from '@material-ui/core';
-
 import { SideBarLeftUseStyles as useStyles } from '../../../style'
 import RoomCard from '../../RoomCard';
 import { useDispatch } from 'react-redux';
 import { controlMainBoard } from '../../../actions/mainBoardControl.action';
 import AddFriendFormModal from '../../AddFriendFormModal';
+import { useEffect } from 'react';
+import { useState } from 'react';
+import getAllRoomsForUserApi from '../../../api/room.api';
+import Loading from '../../Loading'
 
 export default function SideBarLeft(props) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
-    const listUsers = [1,2,3,4,5,5,6,6,7,7,8];
+    const myId = sessionStorage.getItem("userId");
+    const [listRooms, setListRooms] = useState([]);
+
     const handleOnClick = (e) => {
         dispatch(controlMainBoard("chatOnBoard"))
     };
+
+    useEffect(() => {
+        let defaultList = [];
+        async function getData() {
+            let rooms = await getAllRoomsForUserApi(myId, "rooms/");
+            for (var key in rooms) {
+                defaultList.push(rooms[key]);
+            }
+        }
+        getData();
+        console.log("enddasd")
+            setListRooms(defaultList)
+
+    }, []);
 
     return <div className={classes.root}>
         <div className={classes.header}>
@@ -39,17 +58,28 @@ export default function SideBarLeft(props) {
             <div className={classes.search}>
                 <SearchIcon />
                 <InputBase
-                margin="dense"
-                placeholder="Search…" />
+                    margin="dense"
+                    placeholder="Search…" />
             </div>
         </FormControl>
         <div className={classes.rooms}>
             <div className={classes.wrapRooms}>
                 {
-                    listUsers && listUsers.map((item, index) => {
-                        return <ButtonBase onClick={handleOnClick} key={index}>
-                            <RoomCard />
-                        </ButtonBase>
+                    !listRooms.length ? <Loading type="inline" /> : listRooms.map((item) => {
+
+                        const { users } = item;
+                        const userInbox = users[0].userId === myId
+                            ? users[1] : users[0];
+   
+                        return <div key={userInbox.userId}>
+                            <ButtonBase
+                                onClick={handleOnClick}>
+                                <RoomCard
+                                    image={userInbox.image}
+                                    Fname={userInbox.Fname}
+                                />
+                            </ButtonBase>
+                        </div>
                     })
                 }
             </div>
