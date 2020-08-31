@@ -33,7 +33,6 @@ export default function SideBarLeft(props) {
             }
         }
         getData();
-        console.log("enddasd")
             setListRooms(defaultList)
 
     }, []);
