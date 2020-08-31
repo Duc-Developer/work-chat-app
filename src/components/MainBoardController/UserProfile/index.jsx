@@ -7,9 +7,10 @@ import ImgMediaCard from '../../ImgMediaCard';
 import CountrySelect from '../../Fields/CountrySelect';
 import GenderCheckBox from '../../Fields/GenderCheckBox';
 import { useDispatch } from 'react-redux';
-import { updateProfile } from '../../../actions/user.action';
+import { updateProfile, friendAcept } from '../../../actions/user.action';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { removeData } from '../../../api/user.api'
 import FriendCard from '../../FriendCard';
 
 
@@ -17,20 +18,51 @@ export default function UserProfile(props) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    let myId = sessionStorage.getItem("userId");
     const { defaultValues } = props;
-    const [status, setStatus] = useState("profile");
+    const [status, setStatus] = useState("profile"); // profile or friends
     const [followingData, setFollowingData] = useState([]);
     const [friendRequestData, setFriendRequestData] = useState([]);
     const { control, handleSubmit, register, errors } = useForm({ defaultValues });
-    
+
+    const handleUnFollow = idUnFollow => {
+        let pathFollow = `users/${myId}/following/${idUnFollow}`; //xóa id user tại mục follow của mình
+        let pathRequest = `users/${idUnFollow}/friendRequest/${myId}`; // xóa id user tại mục friendRequest của ng nhận
+        removeData(pathFollow);
+        removeData(pathRequest);
+        props.reRender()
+    };
+
+    const handleDendy = idDeny => {
+        let pathFollow = `users/${idDeny}/following/${myId}`; //xóa id user tại mục follow của người gửi
+        let pathRequest = `users/${myId}/friendRequest/${idDeny}`; //xóa id user tại mục request của mình
+        removeData(pathFollow);
+        removeData(pathRequest);
+        props.reRender();
+    }
+
+    const handleAcept = item => {
+        // dispatch action acept
+        let data = {
+            user1: {
+                Fname: defaultValues.Fname,
+                image: defaultValues.image,
+                userId: myId
+            },
+            user2: { ...item }
+        };
+        dispatch(friendAcept(data));
+    }
+
     const onSubmit = data => {
         dispatch(updateProfile(data));
+        props.reRender();
     };
-    
+
     useEffect(() => {
         let followings = [];
         let friendRequests = [];
-        if(defaultValues) {
+        if (defaultValues) {
             for (var key in defaultValues.following) {
                 followings.push({
                     ...defaultValues.following[key],
@@ -40,7 +72,7 @@ export default function UserProfile(props) {
             for (var i in defaultValues.friendRequest) {
                 friendRequests.push({
                     ...defaultValues.friendRequest[i],
-                    userId: key
+                    userId: i
                 });
             }
         }
@@ -52,69 +84,69 @@ export default function UserProfile(props) {
         {
             status === "profile" &&
             <form onSubmit={handleSubmit(onSubmit)}>
-            <Grid container >
-                <Grid item xs={8}>
-                    <Typography align="center" variant="h3" color="primary">
-                        Your Profile
-                    </Typography>
-                </Grid>
-                <Grid item container alignItems="center" xs={4}>
-                    <Button type="submit" variant="contained" color="primary">
-                        Create and Submit
-                    </Button>
-                </Grid>
-            </Grid>
-            <Grid container spacing={2}>
-                <Grid item xs={8} container spacing={2} >
+                <Grid container >
                     <Grid item xs={8}>
-                        <TextFieldController
-                            inputRef={register}
-                            name="company"
-                            label="Công ty" />
+                        <Typography align="center" variant="h3" color="primary">
+                            Your Profile
+                    </Typography>
                     </Grid>
-                    <Grid item xs={4}>
-                        <GenderCheckBox control={control} />
-                        {errors.gender && <i>{errors.gender.message}</i>}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextFieldController
-                            inputRef={register}
-                            name="address"
-                            label="Địa chỉ" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextFieldController
-                            inputRef={register}
-                            name="townShip"
-                            label="Quận/Huyện" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <TextFieldController
-                            inputRef={register}
-                            name="city"
-                            label="Thành phố" />
-                    </Grid>
-                    <Grid item xs={4}>
-                        <CountrySelect control={control} />
-                        {errors.country && <i>{errors.country.message}</i>}
-                    </Grid>
-                    <Grid item xs={12}>
-                        <TextFieldController
-                            inputRef={register}
-                            multiline={true}
-                            name="introduce"
-                            rows={3}
-                            variant="outlined"
-                            label="Giới thiệu về bản thân" />
+                    <Grid item container alignItems="center" xs={4}>
+                        <Button type="submit" variant="contained" color="primary">
+                            Create and Submit
+                    </Button>
                     </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                    <ImgMediaCard
-                        control={control}
-                        errors={errors} />
+                <Grid container spacing={2}>
+                    <Grid item xs={8} container spacing={2} >
+                        <Grid item xs={8}>
+                            <TextFieldController
+                                inputRef={register}
+                                name="company"
+                                label="Công ty" />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <GenderCheckBox control={control} />
+                            {errors.gender && <i>{errors.gender.message}</i>}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextFieldController
+                                inputRef={register}
+                                name="address"
+                                label="Địa chỉ" />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <TextFieldController
+                                inputRef={register}
+                                name="townShip"
+                                label="Quận/Huyện" />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <TextFieldController
+                                inputRef={register}
+                                name="city"
+                                label="Thành phố" />
+                        </Grid>
+                        <Grid item xs={4}>
+                            <CountrySelect control={control} />
+                            {errors.country && <i>{errors.country.message}</i>}
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextFieldController
+                                inputRef={register}
+                                multiline={true}
+                                name="introduce"
+                                rows={3}
+                                variant="outlined"
+                                label="Giới thiệu về bản thân" />
+                        </Grid>
+                    </Grid>
+                    <Grid item xs={4}>
+                        <ImgMediaCard
+                            control={control}
+                            errors={errors} />
+                    </Grid>
                 </Grid>
-            </Grid>
-        </form>
+            </form>
         }
         {
             status === "friends" &&
@@ -125,16 +157,16 @@ export default function UserProfile(props) {
                             Danh sách bạn đang theo dõi
                         </Typography>
                         {
-                            followingData && 
+                            followingData &&
                             followingData.map(item => {
                                 return <Grid item xs={8} key={item.userId}>
                                     <FriendCard
-                                    image={item.image}
-                                    Fname={item.Fname}
-                                    userId={item.userId}
-                                    active1={false}
-                                    nameButton2="unfollow"
-                                    handleAction2={() => {console.log("unfollow")}}
+                                        image={item.image}
+                                        Fname={item.Fname}
+                                        userId={item.userId}
+                                        active1={false}
+                                        nameButton2="unfollow"
+                                        handleAction2={() => handleUnFollow(item.userId)}
                                     />
                                 </Grid>
                             })
@@ -142,22 +174,22 @@ export default function UserProfile(props) {
                     </Grid>
                 </Grid>
                 <Grid container item xs={6}>
-                <Grid item xs={12}>
+                    <Grid item xs={12}>
                         <Typography variant="h6">
                             Danh sách kết bạn chờ phản hồi
                         </Typography>
                         {
-                            friendRequestData && 
+                            friendRequestData &&
                             friendRequestData.map(item => {
                                 return <Grid item xs={8} key={item.userId}>
                                     <FriendCard
-                                    image={item.image}
-                                    Fname={item.Fname}
-                                    userId={item.userId}
-                                    nameButton1="acept"
-                                    handleAction1={() => {console.log("acept")}}
-                                    nameButton2="deny"
-                                    handleAction2={() => {console.log("deny")}}
+                                        image={item.image}
+                                        Fname={item.Fname}
+                                        userId={item.userId}
+                                        nameButton1="acept"
+                                        handleAction1={() => handleAcept(item)}
+                                        nameButton2="deny"
+                                        handleAction2={() => handleDendy(item.userId)}
                                     />
                                 </Grid>
                             })
@@ -168,18 +200,18 @@ export default function UserProfile(props) {
         }
         <Grid container>
             <Grid item xs={2}>
-                <Button 
-                onClick={() => {setStatus("friends")}}
-                variant="contained" 
-                color="secondary">
+                <Button
+                    onClick={() => { setStatus("friends") }}
+                    variant="contained"
+                    color="secondary">
                     Friends
                 </Button>
             </Grid>
             <Grid item xs={2}>
-                <Button 
-                onClick={() => {setStatus("profile")}}
-                variant="contained" 
-                color="secondary">
+                <Button
+                    onClick={() => { setStatus("profile") }}
+                    variant="contained"
+                    color="secondary">
                     Profile
                 </Button>
             </Grid>

@@ -1,6 +1,6 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { updateUserProfile, checkUserData, createValueForUserApi } from '../api/user.api';
-import { updateProfileSuccess, updateProfileFail, addFriendRequestSuccess, addFriendRequestFail } from '../actions/user.action';
+import { updateUserProfile, checkUserData, createValueForUserApi, createRoomApi, removeData } from '../api/user.api';
+import { updateProfileSuccess, updateProfileFail, addFriendRequestSuccess, addFriendRequestFail, friendAceptFail, friendAceptSuccess } from '../actions/user.action';
 import { userConstants as userType } from '../constants'
 import md5 from 'md5';
 
@@ -60,10 +60,32 @@ function* addFriendRequest(action) {
     }
 }
 
+function* friendAcept(action) {
+    yield console.log("action acept: ", action)
+    const userAcept = action.payload.user1;
+    const userIsAcept = action.payload.user2;
+    //xóa id user tại mục follow của người gửi
+    let pathFollow = `users/${userIsAcept.userId}/following/${userAcept.userId}`; 
+    //xóa id user tại mục request của mình
+    let pathRequest = `users/${userAcept.userId}/friendRequest/${userIsAcept.userId}`;
+    let error = yield createRoomApi(userAcept, userIsAcept);
+    if(error) {
+        yield put(friendAceptFail(action.payload));
+        return;
+    }
+    yield removeData(pathFollow);
+    yield removeData(pathRequest);
+    yield put(friendAceptSuccess(action.payload));
+}
+
 export function* updateProfileAction() {
-    yield takeEvery(userType.UPDATE_USER_REQUEST, updateProfile)
+    yield takeEvery(userType.UPDATE_USER_REQUEST, updateProfile);
 }
 
 export function* addFriendRequestAction() {
-    yield takeEvery(userType.ADD_FRIEND_REQUEST, addFriendRequest)
+    yield takeEvery(userType.ADD_FRIEND_REQUEST, addFriendRequest);
+}
+
+export function* friendAceptAction() {
+    yield takeEvery(userType.FRIEND_ACEPT, friendAcept);
 }

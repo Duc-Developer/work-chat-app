@@ -41,3 +41,24 @@ export function addFriendRequestFail(data) {
         payload: data
     }
 }
+
+export function friendAcept(data) {
+    return {
+        type: type.FRIEND_ACEPT,
+        payload: data
+    }
+}
+
+export function friendAceptSuccess(data) {
+    return {
+        type: type.FRIEND_ACEPT_SUCCESS,
+        payload: data
+    }
+}
+
+export function friendAceptFail(data) {
+    return {
+        type: type.FRIEND_ACEPT_FAIL,
+        payload: data
+    }
+}
