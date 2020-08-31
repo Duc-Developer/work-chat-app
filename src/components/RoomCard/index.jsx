@@ -4,22 +4,23 @@ import { Typography } from '@material-ui/core';
 import { RoomCardUseStyles as useStyles } from '../../style';
 
 RoomCard.propTypes = {
-    data: PropTypes.object
+    image: PropTypes.string,
+    Fname: PropTypes.string,
+    message: PropTypes.string,
+    time: PropTypes.string
 }
 
 RoomCard.defaultProps = {
-    data: {
-        image: "https://picsum.photos/200",
-        Fname: "some-one",
-        message: "Welcome to chat app, you can chat anything with other people!",
-        time: "22/12"
-    }
+    image: "https://picsum.photos/200",
+    Fname: "some-one",
+    message: "Welcome to chat app, you can chat anything with other people!",
+    time: ""
 }
 
 export default function RoomCard(props) {
 
     const classes = useStyles();
-    const { image, Fname, message, time } = props.data
+    const { image, Fname, message, time } = props
     return <div className={classes.root}>
         <div className={classes.avatar}>
             <img src={image} alt="user-avatar" width="100px" />
