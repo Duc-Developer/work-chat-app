@@ -1,7 +1,6 @@
 import React from 'react';
 import SettingsIcon from '@material-ui/icons/Settings';
 import SearchIcon from '@material-ui/icons/Search';
-import AddBoxIcon from '@material-ui/icons/AddBox';
 import { ButtonBase, InputBase, IconButton, Typography, FormControl } from '@material-ui/core';
 import { SideBarLeftUseStyles as useStyles } from '../../../style'
 import RoomCard from '../../RoomCard';
@@ -31,6 +30,14 @@ export default function SideBarLeft(props) {
         }))
     };
 
+    function findLastMess(obj) {
+        let list = [];
+        for (var key in obj) {
+            list.push(obj[key])
+        };
+        return list[list.length - 1];
+    }
+
     useEffect(() => {
         async function getData() {
             let defaultList = [];
@@ -46,7 +53,7 @@ export default function SideBarLeft(props) {
             }
         );
     }, [listRooms.length]);
-
+  
     return <div className={classes.root}>
         <div className={classes.header}>
             <IconButton>
@@ -79,6 +86,7 @@ export default function SideBarLeft(props) {
                         const { users, messages } = item;
                         const userInbox = users[0].userId === myId
                             ? users[1] : users[0];
+                        let lastMess = findLastMess(messages);
 
                         return <div key={userInbox.userId}>
                             <ButtonBase
@@ -86,6 +94,8 @@ export default function SideBarLeft(props) {
                                 <RoomCard
                                     image={userInbox.image}
                                     Fname={userInbox.Fname}
+                                    message={lastMess.title}
+                                    time={lastMess.time.slice(9)}
                                 />
                             </ButtonBase>
                         </div>
