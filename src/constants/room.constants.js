@@ -1,0 +1,5 @@
+export const roomConstants = {
+    CALL_ROOM: "CALL_ROOM",
+    CALL_ROOM_SUCCESS: "CALL_ROOM_SUCCESS",
+    CALL_ROOM_FAIL: "CALL_ROOM_FAIL"
+}

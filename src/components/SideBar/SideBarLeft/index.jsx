@@ -12,6 +12,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import getAllRoomsForUserApi from '../../../api/room.api';
 import Loading from '../../Loading'
+import { callRoom } from '../../../actions/room.action';
 
 export default function SideBarLeft(props) {
 
@@ -20,8 +21,14 @@ export default function SideBarLeft(props) {
     const myId = sessionStorage.getItem("userId");
     const [listRooms, setListRooms] = useState([]);
 
-    const handleOnClick = (e) => {
-        dispatch(controlMainBoard("chatOnBoard"))
+    const handleOnClick = (user, messages) => {
+        dispatch(controlMainBoard("chatOnBoard"));
+        // user ở đây là user mà userLogin đang chat cùng
+        // messages ở đây là object(tính chất của firebase) nên ta cần chuyển nó về dạng [] ở saga
+        dispatch(callRoom({
+            userInbox: user,
+            messages: messages
+        }))
     };
 
     useEffect(() => {
@@ -69,13 +76,13 @@ export default function SideBarLeft(props) {
                 {
                     !listRooms.length ? <Loading type="line" /> : listRooms.map((item) => {
 
-                        const { users } = item;
+                        const { users, messages } = item;
                         const userInbox = users[0].userId === myId
                             ? users[1] : users[0];
 
                         return <div key={userInbox.userId}>
                             <ButtonBase
-                                onClick={handleOnClick}>
+                                onClick={() => handleOnClick(userInbox, messages)}>
                                 <RoomCard
                                     image={userInbox.image}
                                     Fname={userInbox.Fname}
