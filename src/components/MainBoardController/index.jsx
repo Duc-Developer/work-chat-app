@@ -50,7 +50,7 @@ export default function MainBoardController() {
                         : <UserProfile
                             defaultValues={defaultValues}
                             key="profile"
-                            reRender={() => { setSize(0) }} />
+                            reRender={() => { setTimeout(() => { setSize(0) }, 2000) }} />
                 }
             </div>}
         {typeControl === "chatOnBoard" && <ChatOnBoard />}

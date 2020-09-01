@@ -52,6 +52,7 @@ export default function UserProfile(props) {
             user2: { ...item }
         };
         dispatch(friendAcept(data));
+        props.reRender()
     }
 
     const onSubmit = data => {
