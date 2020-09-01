@@ -53,6 +53,12 @@ export default function MainBoardController() {
                             reRender={() => { setTimeout(() => { setSize(0) }, 2000) }} />
                 }
             </div>}
-        {typeControl === "chatOnBoard" && <ChatOnBoard />}
+        {typeControl === "chatOnBoard" && <div>
+            {
+                !size 
+                ? <Loading type="line" color="secondary" key="loading" />
+                : <ChatOnBoard userCurrent={defaultValues} />
+            }
+        </div> }
     </div>
 }

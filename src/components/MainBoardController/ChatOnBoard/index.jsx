@@ -5,10 +5,10 @@ import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { ChatOnBoardUseStyles as useStyles } from '../../../style';
 import { Typography, IconButton, Switch, FormControl, Input, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux';
 
 ChatOnBoard.propTypes = {
     userCurrent: PropTypes.object,
-    userOnChat: PropTypes.object
 }
 
 ChatOnBoard.defaultProps = {
@@ -22,15 +22,17 @@ export default function ChatOnBoard(props) {
 
     const classes = useStyles();
     const [profileDisable, setDisable] = useState(false);
+    const roomData = useSelector(state => state.room);
+    const { userInbox, messages } = roomData;
     const handleChange = (event) => {
         setDisable(event.target.checked);
     };
-
+console.log(messages)
     return <div className={classes.root}>
         <div className={classes.nav}>
             <div className={classes.title}>
                 <Typography variant="h6" align="center" >
-                    {props.userCurrent.Fname}
+                    {userInbox.Fname}
                 </Typography>
             </div>
             <div>
@@ -49,18 +51,18 @@ export default function ChatOnBoard(props) {
                 <div className={classes.headerBox}>
                     <div className={classes.avatar}>
                         <img
-                            src={props.userCurrent.image}
+                            src={userInbox.image}
                             alt="user-current"
                             width="100px" />
                     </div>
                     <div>
                         <Typography variant="h6">
-                            {props.userCurrent.Fname}
+                            {userInbox.Fname}
                         </Typography>
                         <Typography
                             color="textSecondary"
                             variant="caption">
-                            thời gian chat gần đây nhất
+                            { messages[messages.length - 1].time }
                     </Typography>
                     </div>
                 </div>
@@ -71,11 +73,11 @@ export default function ChatOnBoard(props) {
                     <Grid container >
                         <FormControl fullWidth>
                             <Grid item xs={12}>
-                                <Input 
-                                autoFocus
-                                fullWidth
-                                disableUnderline
-                                placeholder="Viết gì đó đi..." />
+                                <Input
+                                    autoFocus
+                                    fullWidth
+                                    disableUnderline
+                                    placeholder="Viết gì đó đi..." />
                             </Grid>
                             <Grid item xs={6}>
                                 <IconButton>
@@ -89,7 +91,7 @@ export default function ChatOnBoard(props) {
                     </Grid>
                 </div>
             </div>
-            <div className={profileDisable===true ? classes.isDisable : classes.profile}>
+            <div className={profileDisable === true ? classes.isDisable : classes.profile}>
                 <Typography variant="h6">
                     Thông tin hội thoại
                 </Typography>

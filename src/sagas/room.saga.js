@@ -8,7 +8,6 @@ function* callRoom(action) {
     for( var key in messages) {
         listMessages.push({
             ...messages[key],
-            messId: key
         })
     }
     // console.log(action.payload);
