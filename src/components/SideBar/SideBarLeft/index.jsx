@@ -25,17 +25,20 @@ export default function SideBarLeft(props) {
     };
 
     useEffect(() => {
-        let defaultList = [];
         async function getData() {
+            let defaultList = [];
             let rooms = await getAllRoomsForUserApi(myId, "rooms/");
             for (var key in rooms) {
                 defaultList.push(rooms[key]);
             }
+            return defaultList;
         }
-        getData();
-            setListRooms(defaultList)
-
-    }, []);
+        getData().then(
+            res => {
+                setListRooms(res)
+            }
+        );
+    }, [listRooms.length]);
 
     return <div className={classes.root}>
         <div className={classes.header}>
@@ -69,7 +72,7 @@ export default function SideBarLeft(props) {
                         const { users } = item;
                         const userInbox = users[0].userId === myId
                             ? users[1] : users[0];
-   
+
                         return <div key={userInbox.userId}>
                             <ButtonBase
                                 onClick={handleOnClick}>
