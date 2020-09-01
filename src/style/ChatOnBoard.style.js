@@ -52,6 +52,7 @@ export const ChatOnBoardUseStyles = makeStyles({
 
     bodyBox: {
         flexGrow: 1,
+        backgroundColor: "#dddddd",
     },
     footerBox: {
         borderTop: "1px solid #dddddd",

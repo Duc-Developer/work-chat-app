@@ -37,7 +37,7 @@ export default function DashBoard() {
             <NavBar profile={profile} />
             <div className={classes.root}>
                 <SideBarLeft profile={profile} />
-                <MainBoardController />
+                <MainBoardController userCurrent={profile} />
             </div>
         </div>
 }

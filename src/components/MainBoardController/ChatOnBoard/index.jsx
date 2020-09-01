@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import CallIcon from '@material-ui/icons/Call';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { ChatOnBoardUseStyles as useStyles } from '../../../style';
 import { Typography, IconButton, Switch, FormControl, Input, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux';
+import MessagesBox from './MessagesBox';
 
 ChatOnBoard.propTypes = {
     userCurrent: PropTypes.object,
@@ -21,13 +21,18 @@ ChatOnBoard.defaultProps = {
 export default function ChatOnBoard(props) {
 
     const classes = useStyles();
+    const { userCurrent } = props;
     const [profileDisable, setDisable] = useState(false);
     const roomData = useSelector(state => state.room);
     const { userInbox, messages } = roomData;
     const handleChange = (event) => {
         setDisable(event.target.checked);
     };
-console.log(messages)
+
+    // body box cần truyền vào các thuộc tính sau:
+    // userCurrent, userInbox, messages
+    // riêng thuộc tính messages ta cần lắng nghe từ server
+
     return <div className={classes.root}>
         <div className={classes.nav}>
             <div className={classes.title}>
@@ -36,9 +41,6 @@ console.log(messages)
                 </Typography>
             </div>
             <div>
-                <IconButton>
-                    <CallIcon color="primary" />
-                </IconButton>
                 <Switch
                     name="showProfile"
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
@@ -52,7 +54,7 @@ console.log(messages)
                     <div className={classes.avatar}>
                         <img
                             src={userInbox.image}
-                            alt="user-current"
+                            alt="user-inbox"
                             width="100px" />
                     </div>
                     <div>
@@ -62,12 +64,32 @@ console.log(messages)
                         <Typography
                             color="textSecondary"
                             variant="caption">
-                            { messages[messages.length - 1].time }
-                    </Typography>
+                            {messages[messages.length - 1].time}
+                        </Typography>
                     </div>
                 </div>
                 <div className={classes.bodyBox}>
-                    this is body box
+                    {messages && messages.map((item, index) => {
+                        let image;
+                        let right;
+                        if (item.messId === userInbox.userId) {
+                            image = userInbox.image;
+                            right = true;
+                        } else {
+                            image = userCurrent.image;
+                            right = false;
+                        }
+
+                        return (
+                            <MessagesBox
+                                key={index}
+                                image={image}
+                                right={right}
+                                message={item.title}
+                                time={item.time}
+                            />
+                        )
+                    })}
                 </div>
                 <div className={classes.footerBox}>
                     <Grid container >
