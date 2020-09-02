@@ -55,7 +55,10 @@ export default function MessagesBox(props) {
             imageUrl && <Grid
                 className={right ? classes.imageRight : classes.imageLeft}
                 item xs={12}>
-                <img width="200px" src={imageUrl} alt={time} />
+                    <img 
+                    className={classes.image} 
+                    src={imageUrl} 
+                    alt={time} />
             </Grid>
         }
     </Grid>
