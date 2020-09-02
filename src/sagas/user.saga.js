@@ -3,7 +3,7 @@ import { updateUserProfile, checkUserData, createValueForUserApi, removeData } f
 import { updateProfileSuccess, updateProfileFail, addFriendRequestSuccess, addFriendRequestFail, friendAceptFail, friendAceptSuccess } from '../actions/user.action';
 import { userConstants as userType } from '../constants'
 import md5 from 'md5';
-import { createRoomApi } from '../api/room.api';
+import { createRoomApi, getAllRoomsForUserApi } from '../api/room.api';
 
 function* updateProfile(action) {
     let { payload } = action;
@@ -33,7 +33,15 @@ function* addFriendRequest(action) {
     let { idRes, myProfile } = payload;
     let { userId } = myProfile;
     let myFriendRequest = yield checkUserData(userId, "friendRequest");
-
+    let myListRooms = yield getAllRoomsForUserApi(userId, "rooms");
+    // tìm kiếm trong rooms người dùng có tồn tại idRes ko
+    for (var roomId in myListRooms) {
+        if(roomId.indexOf(idRes) !== -1) {
+            yield put(addFriendRequestFail(payload));
+            return;
+        }
+    }
+    // Tìm kiếm trong list bạn bè chờ kết bạn xem có idRes ko
     for (var key in myFriendRequest) {
         if(key === idRes) {
             yield put(addFriendRequestFail(payload));
