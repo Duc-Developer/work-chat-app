@@ -51,7 +51,7 @@ export default function ChatOnBoard(props) {
             });
         }
         getData();
-    }, [messages.length, userInbox.userId])
+    }, [messages.length, userInbox.userId, userCurrentId])
 
     const handleChange = (event) => {
         setDisable(event.target.checked);

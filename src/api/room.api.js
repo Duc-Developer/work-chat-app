@@ -1,4 +1,4 @@
-import { database, storage } from '../firebase';
+import { database } from '../firebase';
 import moment from 'moment';
 
 export const createRoomApi = (item1, item2) => {
