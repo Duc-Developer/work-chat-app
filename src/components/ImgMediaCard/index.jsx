@@ -5,7 +5,7 @@ import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import { Grid, Input, InputLabel } from '@material-ui/core';
+import { Grid, Input, InputLabel, Typography } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 import CheckPasswordModal from '../CheckPasswordModal';
 
@@ -57,6 +57,11 @@ export default function ImgMediaCard(props) {
             </CardActionArea>
             <CardContent>
                 <Grid container spacing={1}>
+                    <Grid item xs={12}>
+                        <Typography variant="subtitle1">
+                            {`My ID: "${sessionStorage.getItem("userId")}"`}
+                        </Typography>
+                    </Grid>
                     <Grid item xs={6}>
                         <Controller
                             control={control}
