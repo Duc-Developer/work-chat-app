@@ -42,7 +42,9 @@ export default function MessagesBox(props) {
                 color="textSecondary">
                     {time}
                 </Typography>
-                <Typography variant="body1">
+                <Typography 
+                align={right ? "right" : "left"} 
+                variant="body1">
                     {message}
                 </Typography>
             </div>
