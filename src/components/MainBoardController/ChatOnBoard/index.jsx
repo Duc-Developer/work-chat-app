@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import CallIcon from '@material-ui/icons/Call';
-import AttachmentIcon from '@material-ui/icons/Attachment';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { ChatOnBoardUseStyles as useStyles } from '../../../style';
-import { Typography, IconButton, Switch, Input, Grid } from '@material-ui/core';
+import { Typography, IconButton, Switch, Input, Grid, Box, Button } from '@material-ui/core';
 import PropTypes from 'prop-types'
 import { useSelector, useDispatch } from 'react-redux';
 import MessagesBox from './MessagesBox';
@@ -14,6 +13,7 @@ import moment from 'moment'
 import { useEffect } from 'react';
 import { database } from '../../../firebase';
 import Loading from '../../Loading';
+import { useRef } from 'react';
 
 ChatOnBoard.propTypes = {
     userCurrent: PropTypes.object,
@@ -37,6 +37,7 @@ export default function ChatOnBoard(props) {
     const roomData = useSelector(state => state.room);
     const { userInbox } = roomData;
     const [messages, setMessages] = useState([]);
+    let imgRef = useRef(null);
 
     useEffect(() => {
         let path = userCurrentId < userInbox.userId
@@ -56,20 +57,21 @@ export default function ChatOnBoard(props) {
     };
 
     const onSubmit = (input) => {
-        let time = moment().format("hh:mm:ss DD-MM-YYYY");
-        let messId = userCurrentId;
-        let title = input.message;
-        dispatch(sendMessage({
-            userInbox: userInbox,
-            messages: [
-                ...messages, // tạm thời, tí cần sửa lấy từ server
-                {
-                    messId: messId,
-                    time: time,
-                    title: title
-                }
-            ]
-        }));
+        console.log(input)
+        // let time = moment().format("hh:mm:ss DD-MM-YYYY");
+        // let messId = userCurrentId;
+        // let title = input.message;
+        // dispatch(sendMessage({
+        //     userInbox: userInbox,
+        //     messages: [
+        //         ...messages, // tạm thời, tí cần sửa lấy từ server
+        //         {
+        //             messId: messId,
+        //             time: time,
+        //             title: title
+        //         }
+        //     ]
+        // }));
         setValue("message", "");
     }
 
@@ -145,7 +147,7 @@ export default function ChatOnBoard(props) {
                 <div className={classes.footerBox}>
                     <form onSubmit={handleSubmit(onSubmit)} >
                         <Grid container >
-                            <Grid item xs={10}>
+                            <Grid container alignItems="center" item xs={10}>
                                 <Input
                                     autoFocus
                                     fullWidth
@@ -154,19 +156,33 @@ export default function ChatOnBoard(props) {
                                     disableUnderline
                                     placeholder="Viết gì đó đi..." />
                             </Grid>
-                            <Grid item container justify="flex-end" xs={2} >
+                            <Grid item container direction="row" justify="flex-end" xs={2} >
+                                <Button
+                                    onClick={() => { setValue("message", "") }}
+                                    color="primary">
+                                    Clear
+                                    </Button>
                                 <IconButton type="submit">
                                     <SendIcon color="primary" />
                                 </IconButton>
                             </Grid>
                         </Grid>
                         <Grid item xs={6}>
-                            <IconButton>
-                                <AttachmentIcon fontSize="small" />
-                            </IconButton>
-                            <IconButton>
+                            <IconButton onClick={() => { imgRef.current.click() }}>
                                 <PhotoLibraryIcon fontSize="small" />
                             </IconButton>
+                            <Box component="div" display="none">
+                                <input
+                                    name="imgUpload"
+                                    ref={imgRef}
+                                    type="file"
+                                    onChange={(e) => {
+                                        if (e.target.files[0]) {
+                                            setValue("message", e.target.files[0].name);
+                                            setValue("imgUpload", e.target.files[0]);
+                                        }
+                                    }} />
+                            </Box>
                         </Grid>
                     </form>
                 </div>
