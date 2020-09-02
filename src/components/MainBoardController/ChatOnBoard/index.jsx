@@ -213,6 +213,7 @@ export default function ChatOnBoard(props) {
                             <Box component="div" display="none">
                                 <input
                                     name="imgUpload"
+                                    accept="image/*"
                                     ref={imgRef}
                                     type="file"
                                     onChange={(e) => {
