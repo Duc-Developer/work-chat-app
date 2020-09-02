@@ -7,16 +7,18 @@ MessagesBox.propTypes = {
     image: PropTypes.string,
     message: PropTypes.string,
     time: PropTypes.string,
-    right: PropTypes.bool
+    right: PropTypes.bool,
+    imageUrl: PropTypes.string
 }
 
 MessagesBox.defaultProps = {
-    right: false
+    right: false,
+    imageUrl: "https://picsum.photos/id/237/200/300"
 }
 
 export default function MessagesBox(props) {
 
-    const { image, message, time, right } = props;
+    const { image, message, time, right, imageUrl } = props;
     const classes = useStyles();
 
     return <Grid
@@ -36,18 +38,25 @@ export default function MessagesBox(props) {
             className={right ? classes.messRight : classes.messLeft}
         >
             <div>
-                <Typography 
-                align={right ? "right" : "left"} 
-                variant="subtitle1" 
-                color="textSecondary">
+                <Typography
+                    align={right ? "right" : "left"}
+                    variant="subtitle1"
+                    color="textSecondary">
                     {time}
                 </Typography>
-                <Typography 
-                align={right ? "right" : "left"} 
-                variant="body1">
+                <Typography
+                    align={right ? "right" : "left"}
+                    variant="body1">
                     {message}
                 </Typography>
             </div>
         </Grid>
+        {
+            imageUrl && <Grid
+                className={right ? classes.imageRight : classes.imageLeft}
+                item xs={12}>
+                <img width="200px" src={imageUrl} alt={time} />
+            </Grid>
+        }
     </Grid>
 }

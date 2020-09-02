@@ -36,6 +36,14 @@ export const MessageBoxUseStyles = makeStyles(theme => {
             borderRadius: "20px",
             paddingLeft: theme.spacing(2),
             paddingRight: theme.spacing(2)
+        },
+        imageLeft: {
+            margin: theme.spacing(1),
+        },
+        imageRight: {
+            margin: theme.spacing(1),
+            display: "flex",
+            justifyContent: "flex-end"
         }
     }
 })
