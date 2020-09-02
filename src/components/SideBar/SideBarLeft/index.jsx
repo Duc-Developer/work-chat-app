@@ -28,7 +28,7 @@ export default function SideBarLeft(props) {
             userInbox: user,
             messages: messages
         }));
-        setListRooms([]); // bắt render lại khi chuyển chat
+        
     };
 
     function findLastMess(obj) {
