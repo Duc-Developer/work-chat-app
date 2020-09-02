@@ -9,7 +9,8 @@ export const RoomCardUseStyles = makeStyles({
         "&:hover": {
             opacity: "0.8",
             backgroundColor: "#dddddd"
-        }
+        },
+        width: "calc(25vw - 20px)"
     },
     avatar: {
         display: "flex",
@@ -21,15 +22,16 @@ export const RoomCardUseStyles = makeStyles({
         flexGrow: "1"
     },
     information: {
-        flexGrow: "2",
+        flexGrow: 2,
         display: "flex",
         flexDirection: "column",
-        margin: "0 10px 0 10px"
+        margin: "0 10px 0 10px",
     },
     titleHeader: {
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
+        flexGrow: 1
     },
     message: {
         whiteSpace: "nowrap",
