@@ -53,6 +53,13 @@ export const ChatOnBoardUseStyles = makeStyles({
     bodyBox: {
         flexGrow: 1,
         backgroundColor: "#dddddd",
+        height: "calc(50vh)",
+        overflowY: "scroll",
+        "&::-webkit-scrollbar": {
+            display: "none"
+        },
+        msOverflowStyle: "none",
+        scrollbarWidth: "none"
     },
     footerBox: {
         borderTop: "1px solid #dddddd",
