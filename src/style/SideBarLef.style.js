@@ -23,6 +23,7 @@ export const SideBarLeftUseStyles = makeStyles({
         backgroundColor: "#eeeeee",
         borderRadius: "30px",
         padding: "5px 10px 5px 10px",
+        width: "80%"
     },
     rooms: {
         flexGrow: 1,

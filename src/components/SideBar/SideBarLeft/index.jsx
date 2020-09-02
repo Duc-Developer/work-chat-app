@@ -19,6 +19,7 @@ export default function SideBarLeft(props) {
     const dispatch = useDispatch();
     const myId = sessionStorage.getItem("userId");
     const [listRooms, setListRooms] = useState([]);
+    const [roomSearch, setRoomSearch] = useState([])
 
     const handleOnClick = (user, messages) => {
         dispatch(controlMainBoard("chatOnBoard"));
@@ -28,8 +29,22 @@ export default function SideBarLeft(props) {
             userInbox: user,
             messages: messages
         }));
-        
+
     };
+
+    const handleSearch = (e) => {
+        let search = e.target.value.toLowerCase();
+        let result = listRooms.filter(item => {
+            let users = item.users; //array 2 phan tu
+            let fName1 = users[0].Fname;
+            let fName2 = users[1].Fname
+            if (fName1.toLowerCase().indexOf(search) !== -1
+                || fName2.toLowerCase().indexOf(search) !== -1) {
+                return item;
+            }
+        })
+        setRoomSearch(result);
+    }
 
     function findLastMess(obj) {
         let list = [];
@@ -53,7 +68,7 @@ export default function SideBarLeft(props) {
                 setListRooms(res)
             }
         );
-    }, [listRooms.length]);
+    }, [listRooms.length, roomSearch.length]);
 
     return <div className={classes.root}>
         <div className={classes.header}>
@@ -71,36 +86,64 @@ export default function SideBarLeft(props) {
             </IconButton> */}
             <AddFriendFormModal profile={props.profile} />
         </div>
-        <FormControl>
-            <div className={classes.search}>
-                <SearchIcon />
-                <InputBase
-                    margin="dense"
-                    placeholder="Search…" />
-            </div>
-        </FormControl>
+        {/* <FormControl> */}
+        <div className={classes.search}>
+            <SearchIcon />
+            <InputBase
+                fullWidth
+                onChange={handleSearch}
+                margin="dense"
+                placeholder="Find name…" />
+        </div>
+        {/* </FormControl> */}
         <div className={classes.rooms}>
             <div className={classes.wrapRooms}>
                 {
-                    !listRooms.length ? <Loading type="line" /> : listRooms.map((item) => {
+                    !listRooms.length
+                        ? <Loading type="line" />
+                        : <div>
+                            {
+                                !roomSearch.length
+                                    ? listRooms.map((item) => {
 
-                        const { users, messages } = item;
-                        const userInbox = users[0].userId === myId
-                            ? users[1] : users[0];
-                        let lastMess = findLastMess(messages);
+                                        const { users, messages } = item;
+                                        const userInbox = users[0].userId === myId
+                                            ? users[1] : users[0];
+                                        let lastMess = findLastMess(messages);
 
-                        return <div key={userInbox.userId}>
-                            <ButtonBase
-                                onClick={() => handleOnClick(userInbox, messages)}>
-                                <RoomCard
-                                    image={userInbox.image}
-                                    Fname={userInbox.Fname}
-                                    message={lastMess.title}
-                                    time={lastMess.time.slice(9)}
-                                />
-                            </ButtonBase>
+                                        return <div key={userInbox.userId}>
+                                            <ButtonBase
+                                                onClick={() => handleOnClick(userInbox, messages)}>
+                                                <RoomCard
+                                                    image={userInbox.image}
+                                                    Fname={userInbox.Fname}
+                                                    message={lastMess.title}
+                                                    time={lastMess.time.slice(9)}
+                                                />
+                                            </ButtonBase>
+                                        </div>
+                                    })
+                                    : roomSearch.map((item) => {
+
+                                        const { users, messages } = item;
+                                        const userInbox = users[0].userId === myId
+                                            ? users[1] : users[0];
+                                        let lastMess = findLastMess(messages);
+
+                                        return <div key={userInbox.userId}>
+                                            <ButtonBase
+                                                onClick={() => handleOnClick(userInbox, messages)}>
+                                                <RoomCard
+                                                    image={userInbox.image}
+                                                    Fname={userInbox.Fname}
+                                                    message={lastMess.title}
+                                                    time={lastMess.time.slice(9)}
+                                                />
+                                            </ButtonBase>
+                                        </div>
+                                    })
+                            }
                         </div>
-                    })
                 }
             </div>
         </div>
