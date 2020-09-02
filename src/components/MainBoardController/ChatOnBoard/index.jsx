@@ -15,6 +15,7 @@ import { database, storage } from '../../../firebase';
 import Loading from '../../Loading';
 import { useRef } from 'react';
 import * as ids from 'short-id';
+import MediaBoxScroll from '../../MediaBoxScroll';
 
 ChatOnBoard.propTypes = {
     userCurrent: PropTypes.object,
@@ -39,7 +40,7 @@ export default function ChatOnBoard(props) {
     const { userInbox } = roomData;
     const [messages, setMessages] = useState([]);
     let imgRef = useRef(null);
-
+    
     useEffect(() => {
         let path = userCurrentId < userInbox.userId
             ? userCurrentId + userInbox.userId
@@ -231,13 +232,18 @@ export default function ChatOnBoard(props) {
             <div className={profileDisable === true ? classes.isDisable : classes.profile}>
                 <Typography variant="h6">
                     Thông tin hội thoại
-            </Typography>
+                </Typography>
+                <Typography variant="body1">
+                    <PhotoLibraryIcon color="primary" /> {` Album`}
+                </Typography>
                 <div className={classes.mediaBox}>
-                    all media is here
-            </div>
-                <div className={classes.fileBox}>
-                    all file link is here
-            </div>
+                    {
+                        !messages.length
+                        ? <Loading type="line" />
+                        : <MediaBoxScroll list={messages.filter(item => item.imageUrl)} />
+                        
+                    }
+                </div>
             </div>
         </div>
     </div>

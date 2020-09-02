@@ -11,7 +11,7 @@ export const ChatOnBoardUseStyles = makeStyles({
         flexDirection: "column",
         width: "calc(75vw - 5px)",
         height: "calc(100vh - 70px)",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
 
     nav: {
@@ -78,8 +78,5 @@ export const ChatOnBoardUseStyles = makeStyles({
     },
     mediaBox: {
         width: "100%",
-    },
-    fileBox: {
-        width: "100%"
     }
 })
