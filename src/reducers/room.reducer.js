@@ -13,15 +13,7 @@ export function roomReducer(state = initialState, action) {
         case roomType.CALL_ROOM_FAIL:
             return state;
         case roomType.SEND_MESSAGE_SUCCESS:
-            let newState = {
-                ...state,
-                messages: [
-                    ...state.messages,
-                    payload
-                ]
-            }
-            console.log("reducer: ", newState)
-            return newState;
+            return payload;
         case roomType.SEND_MESSAGE_FAIL:
             return state;
         default:

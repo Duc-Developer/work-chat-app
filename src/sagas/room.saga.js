@@ -1,6 +1,7 @@
 import { roomConstants as roomType } from '../constants';
 import { put, takeEvery } from 'redux-saga/effects'
-import { callRoomSuccess, sendMessageSuccess } from '../actions/room.action';
+import { callRoomSuccess, sendMessageSuccess, sendMessageFail } from '../actions/room.action';
+import { updateMessages } from '../api/room.api';
 
 function* callRoom(action) {
     let listMessages = [];
@@ -18,7 +19,17 @@ function* callRoom(action) {
 }
 
 function* sendMessage(action) {
-    yield put(sendMessageSuccess(action.payload));
+    const { userInbox, messages } = action.payload;
+    let id1 = userInbox.userId;
+    let id2 = sessionStorage.getItem("userId");
+    // yield console.log(action.payload.messages)
+    let error = yield updateMessages(id1, id2, messages);
+    if(!error) {
+        yield put(sendMessageSuccess(action.payload));
+        return;
+    }else {
+        yield put(sendMessageFail(action.payload));
+    }
 }
 
 export function* sendMessageAction() {

@@ -32,7 +32,6 @@ export default function ChatOnBoard(props) {
     const [profileDisable, setDisable] = useState(false);
     const roomData = useSelector(state => state.room);
     const { userInbox, messages } = roomData;
-    const listMessages =  useSelector(state => state.room.messages);
 
     const handleChange = (event) => {
         setDisable(event.target.checked);
@@ -43,9 +42,15 @@ export default function ChatOnBoard(props) {
         let messId = sessionStorage.getItem("userId")
         let title = input.message;
         dispatch(sendMessage({
-            messId: messId,
-            time: time,
-            title: title
+            userInbox: userInbox,
+            messages: [
+                ...messages, // tạm thời, tí cần sửa lấy từ server
+                {
+                    messId: messId,
+                    time: time,
+                    title: title
+                }
+            ]
         }));
         setValue("message", "");
     }
@@ -93,7 +98,7 @@ export default function ChatOnBoard(props) {
                     </div>
                 </div>
                 <div className={classes.bodyBox}>
-                    {listMessages && listMessages.map((item, index) => {
+                    {messages && messages.map((item, index) => {
                         let image;
                         let right;
                         if (item.messId === userInbox.userId) {

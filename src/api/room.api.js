@@ -13,7 +13,7 @@ export const createRoomApi = (item1, item2) => {
             { ...item2 }
         ],
         messages: {
-            "bot": {
+            "0": {
                 time: now,
                 title: `Chúc mừng ${item1.Fname} và ${item2.Fname} đã trở thành bạn bè`
             }
@@ -44,3 +44,12 @@ export const getAllRoomsForUserApi = (id, path) => {
             })
 }
 
+export const updateMessages = (id1, id2, message) => {
+    let path;
+    id1 < id2 ? path = "rooms/" + id1 + id2 + "/messages"
+                : path = "rooms/" + id2 + id1 + "/messages";
+    return database
+            .ref(path)
+            .update(message)
+            .catch(err => err);
+}
