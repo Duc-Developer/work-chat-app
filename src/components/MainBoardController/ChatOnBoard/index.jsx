@@ -11,9 +11,10 @@ import { useForm } from 'react-hook-form';
 import { sendMessage } from '../../../actions/room.action';
 import moment from 'moment'
 import { useEffect } from 'react';
-import { database } from '../../../firebase';
+import { database, storage } from '../../../firebase';
 import Loading from '../../Loading';
 import { useRef } from 'react';
+import * as ids from 'short-id';
 
 ChatOnBoard.propTypes = {
     userCurrent: PropTypes.object,
@@ -57,21 +58,59 @@ export default function ChatOnBoard(props) {
     };
 
     const onSubmit = (input) => {
-        console.log(input)
-        // let time = moment().format("hh:mm:ss DD-MM-YYYY");
-        // let messId = userCurrentId;
-        // let title = input.message;
-        // dispatch(sendMessage({
-        //     userInbox: userInbox,
-        //     messages: [
-        //         ...messages, // tạm thời, tí cần sửa lấy từ server
-        //         {
-        //             messId: messId,
-        //             time: time,
-        //             title: title
-        //         }
-        //     ]
-        // }));
+        let newMessages = [];
+        let time = moment().format("hh:mm:ss DD-MM-YYYY");
+        let messId = userCurrentId;
+        let title = input.message;
+        function uploadFile() {
+            let newKey = ids.generate();
+            let uploadTask = storage
+                .ref()
+                .child("images/" + newKey)
+                .put(input.imgUpload);
+            uploadTask
+                .on("state_changed",
+                    snap => snap,
+                    error => console.log(error),
+                    () => {
+                        return uploadTask
+                            .snapshot
+                            .ref
+                            .getDownloadURL()
+                            .then(url => {
+                                newMessages = [
+                                    ...messages, // tạm thời, tí cần sửa lấy từ server
+                                    {
+                                        messId: messId,
+                                        time: time,
+                                        title: title,
+                                        imageUrl: url
+                                    }
+                                ];
+                                dispatch(sendMessage({
+                                    userInbox: userInbox,
+                                    messages: newMessages
+                                }));
+                            })
+                    }
+                ) 
+        }
+        if (input.imgUpload) {
+            uploadFile();
+        } else {
+            newMessages = [
+                ...messages, // tạm thời, tí cần sửa lấy từ server
+                {
+                    messId: messId,
+                    time: time,
+                    title: title
+                }
+            ];
+            dispatch(sendMessage({
+                userInbox: userInbox,
+                messages: newMessages
+            }));
+        }
         setValue("message", "");
     }
 

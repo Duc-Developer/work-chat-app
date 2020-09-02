@@ -12,8 +12,7 @@ MessagesBox.propTypes = {
 }
 
 MessagesBox.defaultProps = {
-    right: false,
-    imageUrl: "https://picsum.photos/id/237/200/300"
+    right: false
 }
 
 export default function MessagesBox(props) {

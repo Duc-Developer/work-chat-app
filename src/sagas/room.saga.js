@@ -22,7 +22,7 @@ function* sendMessage(action) {
     const { userInbox, messages } = action.payload;
     let id1 = userInbox.userId;
     let id2 = sessionStorage.getItem("userId");
-    // yield console.log(action.payload.messages)
+    // yield console.log(messages)
     let error = yield updateMessages(id1, id2, messages);
     if(!error) {
         yield put(sendMessageSuccess(action.payload));
