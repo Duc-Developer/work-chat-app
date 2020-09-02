@@ -1,8 +1,9 @@
 import { put, takeEvery } from 'redux-saga/effects';
-import { updateUserProfile, checkUserData, createValueForUserApi, createRoomApi, removeData } from '../api/user.api';
+import { updateUserProfile, checkUserData, createValueForUserApi, removeData } from '../api/user.api';
 import { updateProfileSuccess, updateProfileFail, addFriendRequestSuccess, addFriendRequestFail, friendAceptFail, friendAceptSuccess } from '../actions/user.action';
 import { userConstants as userType } from '../constants'
 import md5 from 'md5';
+import { createRoomApi } from '../api/room.api';
 
 function* updateProfile(action) {
     let { payload } = action;

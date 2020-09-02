@@ -20,3 +20,24 @@ export function callRoomFail(data) {
         payload: data
     };
 };
+
+export function sendMessage(data) {
+    return {
+        type: type.SEND_MESSAGE,
+        payload: data
+    }
+}
+
+export function sendMessageSuccess(data) {
+    return {
+        type: type.SEND_MESSAGE_SUCCESS,
+        payload: data
+    }
+}
+
+export function sendMessageFail(data) {
+    return {
+        type: type.SEND_MESSAGE_FAIL,
+        payload: data
+    }
+}

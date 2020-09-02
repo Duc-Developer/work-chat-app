@@ -2,7 +2,7 @@ import { all } from 'redux-saga/effects';
 import { registerAction, loginAction } from './auth.saga';
 import { controlMainBoardAction } from './control.saga';
 import { updateProfileAction, addFriendRequestAction, friendAceptAction } from './user.saga';
-import { callRoomAction } from './room.saga';
+import { callRoomAction, sendMessageAction } from './room.saga';
 
 export default function* rootSaga() {
     yield all([
@@ -12,6 +12,7 @@ export default function* rootSaga() {
         updateProfileAction(),
         addFriendRequestAction(),
         friendAceptAction(),
-        callRoomAction()
+        callRoomAction(),
+        sendMessageAction()
     ])
 }

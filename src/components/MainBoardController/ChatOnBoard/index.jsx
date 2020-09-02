@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
+import CallIcon from '@material-ui/icons/Call';
 import AttachmentIcon from '@material-ui/icons/Attachment';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import { ChatOnBoardUseStyles as useStyles } from '../../../style';
-import { Typography, IconButton, Switch, FormControl, Input, Grid } from '@material-ui/core';
+import { Typography, IconButton, Switch, Input, Grid } from '@material-ui/core';
 import PropTypes from 'prop-types'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import MessagesBox from './MessagesBox';
+import SendIcon from '@material-ui/icons/Send';
+import { useForm } from 'react-hook-form';
+import { sendMessage } from '../../../actions/room.action';
+import moment from 'moment'
 
 ChatOnBoard.propTypes = {
     userCurrent: PropTypes.object,
@@ -21,13 +26,29 @@ ChatOnBoard.defaultProps = {
 export default function ChatOnBoard(props) {
 
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const { register, handleSubmit, setValue } = useForm();
     const { userCurrent } = props;
     const [profileDisable, setDisable] = useState(false);
     const roomData = useSelector(state => state.room);
     const { userInbox, messages } = roomData;
+    const listMessages =  useSelector(state => state.room.messages);
+
     const handleChange = (event) => {
         setDisable(event.target.checked);
     };
+   
+    const onSubmit = (input) => {
+        let time = moment().format("hh:mm:ss DD-MM-YYYY");
+        let messId = sessionStorage.getItem("userId")
+        let title = input.message;
+        dispatch(sendMessage({
+            messId: messId,
+            time: time,
+            title: title
+        }));
+        setValue("message", "");
+    }
 
     // body box cần truyền vào các thuộc tính sau:
     // userCurrent, userInbox, messages
@@ -41,6 +62,9 @@ export default function ChatOnBoard(props) {
                 </Typography>
             </div>
             <div>
+                <IconButton onClick={() => { alert("Để tiết kiệm dung lượng firebase, tính năng này chỉ là thử nghiệm") }}>
+                    <CallIcon color="primary" />
+                </IconButton>
                 <Switch
                     name="showProfile"
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
@@ -69,7 +93,7 @@ export default function ChatOnBoard(props) {
                     </div>
                 </div>
                 <div className={classes.bodyBox}>
-                    {messages && messages.map((item, index) => {
+                    {listMessages && listMessages.map((item, index) => {
                         let image;
                         let right;
                         if (item.messId === userInbox.userId) {
@@ -92,14 +116,21 @@ export default function ChatOnBoard(props) {
                     })}
                 </div>
                 <div className={classes.footerBox}>
-                    <Grid container >
-                        <FormControl fullWidth>
+                    <form onSubmit={handleSubmit(onSubmit)} >
+                        <Grid container >
                             <Grid item xs={12}>
                                 <Input
                                     autoFocus
                                     fullWidth
+                                    name="message"
+                                    inputRef={register({ required: true })}
                                     disableUnderline
                                     placeholder="Viết gì đó đi..." />
+                            </Grid>
+                            <Grid item >
+                                <IconButton type="submit">
+                                    <SendIcon color="primary" />
+                                </IconButton>
                             </Grid>
                             <Grid item xs={6}>
                                 <IconButton>
@@ -109,8 +140,8 @@ export default function ChatOnBoard(props) {
                                     <PhotoLibraryIcon fontSize="small" />
                                 </IconButton>
                             </Grid>
-                        </FormControl>
-                    </Grid>
+                        </Grid>
+                    </form>
                 </div>
             </div>
             <div className={profileDisable === true ? classes.isDisable : classes.profile}>

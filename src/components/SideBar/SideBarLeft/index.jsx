@@ -9,7 +9,7 @@ import { controlMainBoard } from '../../../actions/mainBoardControl.action';
 import AddFriendFormModal from '../../AddFriendFormModal';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import getAllRoomsForUserApi from '../../../api/room.api';
+import { getAllRoomsForUserApi } from '../../../api/room.api';
 import Loading from '../../Loading'
 import { callRoom } from '../../../actions/room.action';
 
@@ -27,7 +27,8 @@ export default function SideBarLeft(props) {
         dispatch(callRoom({
             userInbox: user,
             messages: messages
-        }))
+        }));
+        setListRooms([]); // bắt render lại khi chuyển chat
     };
 
     function findLastMess(obj) {
@@ -53,7 +54,7 @@ export default function SideBarLeft(props) {
             }
         );
     }, [listRooms.length]);
-  
+
     return <div className={classes.root}>
         <div className={classes.header}>
             <IconButton>
