@@ -179,6 +179,7 @@ export default function ChatOnBoard(props) {
                                 right={right}
                                 message={item.title}
                                 time={item.time}
+                                imageUrl={item.imageUrl}
                             />
                         )
                     })}
