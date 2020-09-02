@@ -37,11 +37,11 @@ export default function ChatOnBoard(props) {
     const roomData = useSelector(state => state.room);
     const { userInbox } = roomData;
     const [messages, setMessages] = useState([]);
-    
+
     useEffect(() => {
         let path = userCurrentId < userInbox.userId
-                    ? userCurrentId + userInbox.userId
-                    : userInbox.userId + userCurrentId;
+            ? userCurrentId + userInbox.userId
+            : userInbox.userId + userCurrentId;
         async function getData() {
             let data = database.ref(`rooms/${path}/messages`);
             data.on("value", snap => {
@@ -49,12 +49,12 @@ export default function ChatOnBoard(props) {
             });
         }
         getData();
-    },[messages.length, userInbox.userId])
-    
+    }, [messages.length, userInbox.userId])
+
     const handleChange = (event) => {
         setDisable(event.target.checked);
     };
-   
+
     const onSubmit = (input) => {
         let time = moment().format("hh:mm:ss DD-MM-YYYY");
         let messId = userCurrentId;
@@ -78,86 +78,87 @@ export default function ChatOnBoard(props) {
     // riêng thuộc tính messages ta cần lắng nghe từ server
 
     return <div className={classes.root}>
-    <div className={classes.nav}>
-        <div className={classes.title}>
-            <Typography variant="h6" align="center" >
-                {userInbox.Fname}
-            </Typography>
-        </div>
-        <div>
-            <IconButton onClick={() => { alert("Để tiết kiệm dung lượng firebase, tính năng này chỉ là thử nghiệm") }}>
-                <CallIcon color="primary" />
-            </IconButton>
-            <Switch
-                name="showProfile"
-                inputProps={{ 'aria-label': 'secondary checkbox' }}
-                checked={profileDisable}
-                onChange={handleChange} />
-        </div>
-    </div>
-    <div className={classes.mainBoard}>
-        <div className={classes.chatBox}>
-            <div className={classes.headerBox}>
-                <div className={classes.avatar}>
-                    <img
-                        src={userInbox.image}
-                        alt="user-inbox"
-                        width="100px" />
-                </div>
-                <div>
-                    <Typography variant="h6">
-                        {userInbox.Fname}
-                    </Typography>
-                    {
-                        !messages.length 
-                        ? <Loading type="circular" size="10px" />
-                        : <Typography
-                        color="textSecondary"
-                        variant="caption">
-                        {messages[messages.length - 1].time}
-                    </Typography>
-                    }
-                </div>
+        <div className={classes.nav}>
+            <div className={classes.title}>
+                <Typography variant="h6" align="center" >
+                    {userInbox.Fname}
+                </Typography>
             </div>
-            <div className={classes.bodyBox}>
-                { messages.map((item, index) => {
-                    let image;
-                    let right;
-                    if (item.messId === userInbox.userId) {
-                        image = userInbox.image;
-                        right = true;
-                    } else {
-                        image = userCurrent.image;
-                        right = false;
-                    }
+            <div>
+                <IconButton onClick={() => { alert("Để tiết kiệm dung lượng firebase, tính năng này chỉ là thử nghiệm") }}>
+                    <CallIcon color="primary" />
+                </IconButton>
+                <Switch
+                    name="showProfile"
+                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    checked={profileDisable}
+                    onChange={handleChange} />
+            </div>
+        </div>
+        <div className={classes.mainBoard}>
+            <div className={classes.chatBox}>
+                <div className={classes.headerBox}>
+                    <div className={classes.avatar}>
+                        <img
+                            src={userInbox.image}
+                            alt="user-inbox"
+                            width="100px" />
+                    </div>
+                    <div>
+                        <Typography variant="h6">
+                            {userInbox.Fname}
+                        </Typography>
+                        {
+                            !messages.length
+                                ? <Loading type="circular" size="10px" />
+                                : <Typography
+                                    color="textSecondary"
+                                    variant="caption">
+                                    {messages[messages.length - 1].time}
+                                </Typography>
+                        }
+                    </div>
+                </div>
+                <div className={classes.bodyBox}>
+                    {messages.map((item, index) => {
+                        let image;
+                        let right;
+                        if (item.messId === userInbox.userId) {
+                            image = userInbox.image;
+                            right = true;
+                        } else {
+                            image = userCurrent.image;
+                            right = false;
+                        }
 
-                    return (
-                        <MessagesBox
-                            key={index}
-                            image={image}
-                            right={right}
-                            message={item.title}
-                            time={item.time}
-                        />
-                    )
-                })}
-            </div>
-            <div className={classes.footerBox}>
-                <form onSubmit={handleSubmit(onSubmit)} >
-                    <Grid container >
-                        <Grid item xs={12}>
-                            <Input
-                                autoFocus
-                                fullWidth
-                                name="message"
-                                inputRef={register({ required: true })}
-                                disableUnderline
-                                placeholder="Viết gì đó đi..." />
-                        </Grid>
-                        <Grid item >
-                            <IconButton type="submit">
-                                <SendIcon color="primary" />
-                            </IconButton>
+                        return (
+                            <MessagesBox
+                                key={index}
+                                image={image}
+                                right={right}
+                                message={item.title}
+                                time={item.time}
+                            />
+                        )
+                    })}
+                </div>
+                <div className={classes.footerBox}>
+                    <form onSubmit={handleSubmit(onSubmit)} >
+                        <Grid container >
+                            <Grid item xs={10}>
+                                <Input
+                                    autoFocus
+                                    fullWidth
+                                    name="message"
+                                    inputRef={register({ required: true })}
+                                    disableUnderline
+                                    placeholder="Viết gì đó đi..." />
+                            </Grid>
+                            <Grid item container justify="flex-end" xs={2} >
+                                <IconButton type="submit">
+                                    <SendIcon color="primary" />
+                                </IconButton>
+                            </Grid>
                         </Grid>
                         <Grid item xs={6}>
                             <IconButton>
@@ -167,21 +168,20 @@ export default function ChatOnBoard(props) {
                                 <PhotoLibraryIcon fontSize="small" />
                             </IconButton>
                         </Grid>
-                    </Grid>
-                </form>
+                    </form>
+                </div>
             </div>
-        </div>
-        <div className={profileDisable === true ? classes.isDisable : classes.profile}>
-            <Typography variant="h6">
-                Thông tin hội thoại
+            <div className={profileDisable === true ? classes.isDisable : classes.profile}>
+                <Typography variant="h6">
+                    Thông tin hội thoại
             </Typography>
-            <div className={classes.mediaBox}>
-                all media is here
+                <div className={classes.mediaBox}>
+                    all media is here
             </div>
-            <div className={classes.fileBox}>
-                all file link is here
+                <div className={classes.fileBox}>
+                    all file link is here
+            </div>
             </div>
         </div>
     </div>
-</div>
 }
