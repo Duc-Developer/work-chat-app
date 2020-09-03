@@ -3,9 +3,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
 import logoApp from '../../images/work-chat-logo.png';
-import FormControl from '@material-ui/core/FormControl';
-import InputBase from '@material-ui/core/InputBase';
-import SearchIcon from '@material-ui/icons/Search';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
 import { NavBarUseStyles as useStyles } from '../../style';
@@ -40,40 +37,38 @@ export default function NavBar(props) {
     const handleClickAvatar = () => {
         dispatch(controlMainBoard("userProfile"))
     }
-    
 
     return <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
-                <Button 
-                onClick={() => {history.push("/")}}
-                className={classes.logo}>
+                <Button
+                    onClick={() => { history.push("/") }}
+                    className={classes.logo}>
                     <img src={logoApp} alt="logo-app-bar" width="48px" />
                 </Button>
-                <FormControl className={classes.formInput}>
-                    <div className={classes.searchIcon}>
-                        <SearchIcon />
-                    </div>
-                    <InputBase
-                        className={classes.inputRoot}
-                        placeholder="Search…" />
-                </FormControl>
+                <div className={classes.formInput}>
+                    <Button onClick={() => {window.open("https://github.com/Duc-Developer/work-chat-app.git")}} >
+                        <Typography variant="h6">
+                            README
+                        </Typography>
+                    </Button>
+                </div>
                 <Button onClick={handleClickAvatar}>
                     {image && <div className={classes.wrapAvatar}>
                         <Typography variant="h6">
                             {Fname}
-                            </Typography>
+                        </Typography>
                         <img
-                        src={image}
-                        alt="user-avatar"
-                        width="64px"
-                        className={classes.avatar} />
-                    </div> }
+                            src={image}
+                            alt="user-avatar"
+                            width="64px"
+                            className={classes.avatar} />
+                    </div>}
                     {!image && <Avatar >{Fname}</Avatar>}
                 </Button>
-                <Button 
-                onClick={handleLogOut}
-                color="inherit">Đăng xuất</Button>
+                <Button
+                    onClick={handleLogOut}
+                    color="inherit">Đăng xuất</Button>
             </Toolbar>
         </AppBar>
     </div>
