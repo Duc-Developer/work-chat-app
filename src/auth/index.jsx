@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react'
 import { Switch, Route, useRouteMatch, useHistory } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar';
@@ -27,22 +28,28 @@ export default function Auth() {
     const match = useRouteMatch();
     const history = useHistory();
     const classes = useStyles();
+
     const [check, setCheck] = useState(false);
+    let path = window.location.pathname;
 
     useEffect(() => {
-        let path = window.location.pathname;
-        if (path === "/auth/login" || path === "/auth/register") {
-            setCheck(true);
-        } else {
-            setCheck(false);
+        switch(path) {
+            case "/auth/login":
+                setCheck(true);
+                return;
+            case "/auth/register":
+                setCheck(true);
+                return;
+            default:
+                return;
         }
-    })
+    },[path.length])
 
     return <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
                 <div className={classes.home}>
-                    <ButtonBase onClick={() => { history.push("/") }} >
+                    <ButtonBase onClick={() => {history.push("/")}}  >
                         <img src={logoApp} alt="logo-app-bar" width="36px" />
                     </ButtonBase>
                 </div>
@@ -58,7 +65,7 @@ export default function Auth() {
                 </Button>
             </Toolbar>
         </AppBar>
-        <div className={check === true ? classes.isDisable : classes.title}>
+        <div className={check ? classes.isDisable : classes.title}>
             <h1>Bạn cần đăng nhập hoặc đăng ký để sử dụng ứng dụng</h1>
             <img src={logoApp} alt="logo-background" width="240px" />
             <Typography variant="h5">

@@ -1,3 +1,20 @@
+Work-chat-app là 1 ứng dụng chat bao gồm các chức năng:
+
+- Đăng nhập, đăng ký người dùng: sử dụng mã hóa md5 và firebase realtime để lưu trữ dữ liệu
+- Kết bạn bằng id cá nhân, cập nhật profile qua form, cập nhật avatar, name, tel,...
+- Chat realtime thông qua realtime firebase, gửi ảnh, thống kê ảnh của 1 chat box, lưu trữ ảnh thông qua firebase storage.
+- Tìm kiếm box chat thông qua tên người dùng và nhiều tính năng khác,...
+
+Lộ trình build app bao gồm:
+
+- Tạo page đăng ký, đăng nhập người dùng sử dụng back end là firebase realtime
+- Tạo room chat sử dụng firebase realtime
+- Tạo lưu trữ dùng trong việc post image, file từ người dùng sử dụng firebase storage
+
+Main Developer: DucJS Developer
+
+//////////////////////////////////////////////////////////////////
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -30,17 +47,3 @@ See the section about [deployment](https://facebook.github.io/create-react-app/d
 ### `yarn eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-Work-chat-app là 1 ứng dụng chat bao gồm các chức năng:
-
-- Đăng nhập, đăng ký người dùng
-- Tạo room chat, tạo mật khẩu room chat
-- Chat nhóm, gửi ảnh, tài liệu nhóm.
-
-Lộ trình build app bao gồm:
-
-- Tạo page đăng ký, đăng nhập người dùng sử dụng back end là firebase realtime
-- Tạo room chat sử dụng firebase realtime
-- Tạo lưu trữ dùng trong việc post image, file từ người dùng sử dụng firebase storage
-
-Main Developer: DucJS Developer

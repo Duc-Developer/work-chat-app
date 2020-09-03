@@ -1,9 +1,18 @@
-import { all } from 'redux-saga/effects'
-import { registerAction, loginAction } from './auth.saga'
+import { all } from 'redux-saga/effects';
+import { registerAction, loginAction } from './auth.saga';
+import { controlMainBoardAction } from './control.saga';
+import { updateProfileAction, addFriendRequestAction, friendAceptAction } from './user.saga';
+import { callRoomAction, sendMessageAction } from './room.saga';
 
 export default function* rootSaga() {
     yield all([
         registerAction(),
-        loginAction()
+        loginAction(),
+        controlMainBoardAction(),
+        updateProfileAction(),
+        addFriendRequestAction(),
+        friendAceptAction(),
+        callRoomAction(),
+        sendMessageAction()
     ])
 }

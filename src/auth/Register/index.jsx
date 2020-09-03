@@ -32,6 +32,7 @@ export default function Register(props) {
                                     message: "Tên của bạn là cần thiết!"
                                 }
                             })}
+                            autoFocus
                             name="Fname"
                             label="First Name"
                             type="text"
